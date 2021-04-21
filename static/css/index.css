@@ -1,0 +1,24 @@
+.bar {
+    fill : #69b3a2
+    }
+    
+.redbar {
+    fill :red;
+}
+
+.background path {
+    fill: none;
+    stroke: #ddd;
+    shape-rendering: crispEdges;
+  }
+  
+  .foreground path {
+    fill: none;
+    stroke: steelblue;
+  }
+  
+  .brush .extent {
+    fill-opacity: .3;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+  }
