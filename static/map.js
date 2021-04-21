@@ -12,18 +12,9 @@ http://bl.ocks.org/mbostock/3888852  */
 
 		
 //Width and height of map
-var width = 960;
+var width = 760;
 var height = 500;
 
-d3.json("/stateAccidentData", function (data) {
-	//console.log("stateAccidents", data);
-});
-
-stateSymbols = d3.json('/stateSymbols', function (data) {
-	console.log("stateSymbols", data);
-	stateSymbols = data;
-	return data;
-})
 
 
 
@@ -41,7 +32,7 @@ var path = d3.geo.path()               // path generator that will convert GeoJS
 var color = d3.scale.linear()
 			  .range(["rgb(213,222,217)","rgb(69,173,168)","rgb(84,36,55)","rgb(217,91,67)"]);
 
-var legendText = ["Cities Lived", "States Lived", "States Visited", "Nada"];
+var legendText = ["High", "Medium", "Low", "None"];
 
 //Create SVG element and append map to the SVG
 var svg = d3.select("body")
@@ -56,34 +47,33 @@ var div = d3.select("body")
     		.style("opacity", 0);
 
 // Load in my states data!
-d3.json("/stateAccidentData", function(data) {
+d3.json("/states", function (statesData) {
+	//console.log("stateAccidents",statesData.data)
 color.domain([0,1,2,3]); // setting the range of the input data
-
+	data = Object.keys(statesData);
 // Load GeoJSON data and merge with states data
 d3.json("stateGeoStat", function(json) {
-
+	console.log("geo data", json);
 // Loop through each state data value in the .csv file
 for (var i = 0; i < data.length; i++) {
 
-
 	// Grab data value 
-	var dataState = stateSymbols[data[i].state];
-
+	var dataState = data[i];
+	
 	// Find the corresponding state inside the GeoJSON
 	for (var j = 0; j < json.features.length; j++)  {
-		var jsonState = json.features[j].properties.name;
-
+		var jsonState = json.features[j].properties.name; 
 		if (dataState == jsonState) {
 
 		// Copy the data value into the JSON
-		json.features[j].properties.accidents = true; 
+		json.features[j].properties.accidents = statesData[dataState]; 
 
 		// Stop looking through the JSON
 		break;
 		}
 	}
 }
-		
+
 // Bind the data to the SVG and create one path per GeoJSON feature
 svg.selectAll("path")
 	.data(json.features)
@@ -92,15 +82,42 @@ svg.selectAll("path")
 	.attr("d", path)
 	.style("stroke", "#fff")
 	.style("stroke-width", "1")
+	.on("mouseover", function (d) {
+		div.transition()
+		  .duration(200)
+		  .style("opacity", .9);
+		div.text(d.properties.name)
+		  .style("left", (d3.event.pageX) + "px")
+		  .style("top", (d3.event.pageY - 28) + "px");
+	  })
+
+	  // fade out tooltip on mouse out               
+	  .on("mouseout", function (d) {
+		div.transition()
+		  .duration(500)
+		  .style("opacity", 0);
+	  })
 	.style("fill", function(d) {
 
 	// Get data value
-	var value = d.properties.accidents;
+		var value = d.properties.accidents;
 
-	if (value) {
+	if (value>100) {
 	//If value exists…
-	return color(value);
-	} else {
+	return color(3);
+	}
+	if (value>10) {
+		//If value exists…
+		return color(2);
+	}
+	if (value>1) {
+		//If value exists…
+		return color(1);
+	}
+	if (value>100) {
+		//If value exists…
+		return color(1);
+		}else {
 	//If value is undefined…
 	return "rgb(213,222,217)";
 	}
@@ -109,21 +126,21 @@ svg.selectAll("path")
 		 
 // Map the cities I have lived in!
 d3.json("/stateAccidentData", function(data) {
-
+console.log("accident data",data)
 svg.selectAll("circle")
 	.data(data)
 	.enter()
 	.append("circle")
 	.attr("cx", function(d) {
-		return projection([d.Start_Lon, d.Start_Lat])[0];
+		return projection([d.Start_Lng, d.Start_Lat])[0];
 	})
 	.attr("cy", function(d) {
-		return projection([d.Start_Lon, d.Start_Lat])[1];
+		return projection([d.Start_Lng, d.Start_Lat])[1];
 	})
 	.attr("r", function(d) {
-		return 1;
+		return d.Severity*d.Severity;
 	})
-		.style("fill", "rgb(217,91,67)")	
+		.style("fill", "rgb(255,0,0)")	
 		.style("opacity", 0.85)	
 
 	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
@@ -132,7 +149,7 @@ svg.selectAll("circle")
     	div.transition()        
       	   .duration(200)      
            .style("opacity", .9);      
-           div.text(d.place)
+           div.text(d.City)
            .style("left", (d3.event.pageX) + "px")     
            .style("top", (d3.event.pageY - 28) + "px");    
 	})   
