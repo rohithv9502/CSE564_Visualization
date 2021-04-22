@@ -35,6 +35,7 @@ var color = d3.scale.linear()
 var legendText = ["High", "Medium", "Low", "None"];
 
 //Create SVG element and append map to the SVG
+
 var mapSvg = d3.select("body")
 	.append("div")
 	.attr("class","map")
