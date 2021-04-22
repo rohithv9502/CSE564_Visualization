@@ -77,7 +77,7 @@ for (var i = 0; i < data.length; i++) {
 }
 
 // Bind the data to the SVG and create one path per GeoJSON feature
-mapSvg.selectAll("path")
+svg.selectAll("path")
 	.data(json.features)
 	.enter()
 	.append("path")
@@ -129,7 +129,7 @@ mapSvg.selectAll("path")
 // Map the cities I have lived in!
 d3.json("/stateAccidentData", function(data) {
 console.log("accident data",data)
-mapSvg.selectAll("circle")
+svg.selectAll("circle")
 	.data(data)
 	.enter()
 	.append("circle")
@@ -140,7 +140,7 @@ mapSvg.selectAll("circle")
 		return projection([d.Start_Lng, d.Start_Lat])[1];
 	})
 	.attr("r", function(d) {
-		return 1;
+		return d.Severity*d.Severity;
 	})
 		.style("fill", "rgb(255,0,0)")	
 		.style("opacity", 0.85)	
