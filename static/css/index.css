@@ -32,3 +32,19 @@
     position:relative;
     left:50px;
 }
+
+.xtick {
+    font-size: 12px;
+}
+
+.ytick {
+font-size: 16px;
+}
+
+.xlabel {
+font-size: 16px;
+}
+
+.ylabel {
+font-size: 16px;
+}

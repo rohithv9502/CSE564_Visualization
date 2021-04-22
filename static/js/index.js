@@ -81,8 +81,8 @@ function plotCatXScale(){
     .attr("transform","translate(100,"+ (height-100) +")");
     xg.call(d3.axisBottom(xCatScale))
     .selectAll("text")
-    .attr("y", 0)
-    .attr("x", 55)
+    .attr("y", -5)
+    .attr("x", 58)
     .attr("transform","rotate(90)")
     .transition()
     .duration(1000);
@@ -147,7 +147,7 @@ function mouseover(x,y,t){
     
     g.append("text").text(t)
     .attr("id","t"+Math.ceil(x)+"-"+Math.ceil(y))
-    .attr("x",x)
+    .attr("x",x-5)
     .attr("y",y);
 }
 
@@ -199,7 +199,8 @@ function pcpPlot(){
         .domain(dimensions);
         
 
-        var color = ["slateblue", "green", "orange","yellow", "black", "grey", "darkgreen", "pink", "brown", "slateblue", "grey1","gold",]
+        var color = ["#DB7F85", "#50AB84", "#4C6C86", "#C47DCB", "#B59248", "#DD6CA7", "#E15E5A", "#5DA5B3", "#725D82", "#54AF52", "#954D56", "#8C92E8", "#D8597D", "#AB9C27", "#D67D4B", "#D58323", "#BA89AD"]
+        
         
 // Add grey background lines for context.
 // background = svg.append("g")

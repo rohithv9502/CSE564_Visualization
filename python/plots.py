@@ -27,8 +27,14 @@ def bar_chart():
             statewise_map[state] += 1
         else:
             statewise_map[state] = 1
+    statewise_map = sorted(statewise_map.items(), key=lambda item: item[1], reverse=True)
+
     print(statewise_map)
-    return json.dumps(statewise_map)
+    state_map = {}
+    for i in range(len(statewise_map)):
+        state_map[statewise_map[i][0]] = statewise_map[i][1]
+    print(state_map)
+    return json.dumps(state_map)
 
 
 def pcp_plot():
@@ -41,7 +47,12 @@ def pcp_plot():
     file['label'] = labelled_data[:, -1:]
     file = file.fillna(0)
     filter_bool(file)
-    print(file)
+    print(file.columns.tolist())
+    file = file[
+        ['Precipitation(in)', 'Wind_Speed(mph)', 'Visibility(mi)', 'Temperature(F)', 'Humidity(%)', 'Pressure(in)',
+         'Wind_Chill(F)',
+         'Source', 'Severity', 'TMC', 'Distance(mi)', 'Side',
+         'Timezone', 'label']]
     return json.dumps(list(file.T.to_dict().values()))
 
 
@@ -51,7 +62,7 @@ def k_means(data):
     # print(dnum)
     scalar = StandardScaler()
     dnum = scalar.fit_transform(dnum)
-    kmeans = KMeans(n_clusters=3, random_state=0).fit(dnum)
+    kmeans = KMeans(n_clusters=4, random_state=0).fit(dnum)
     print(kmeans.inertia_)
     pdData['label'] = kmeans.labels_
     X = []
@@ -61,11 +72,9 @@ def k_means(data):
         X.append(x)
         kmeans = KMeans(n_clusters=x, random_state=0).fit(dnum)
         Y.append(kmeans.inertia_)
-    print(X,Y)
-    #plt.plot(np.array(X), np.array(Y))
-    #plt.show()
-
-
+    print(X, Y)
+    # plt.plot(np.array(X), np.array(Y))
+    # plt.show()
 
     return pdData.values
 
