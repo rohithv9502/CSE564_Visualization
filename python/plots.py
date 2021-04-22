@@ -13,9 +13,10 @@ data_files = os.path.join(os.path.dirname(__file__), "../data/")
 
 
 def bar_chart():
-    # data_files = os.path.join(os.path.dirname(__file__), "../data/")
-    df = pd.read_csv(data_files + "data_10000.csv")
-    states = pd.read_json(data_files + "states.json", orient="index")[0]
+    # print("path in plotly",data_files)
+    df = pd.read_csv(data_files + "US_Accidents_10000.csv")
+    print(pd.read_json(data_files + "states-symbols.json", orient="index"))
+    states = pd.read_json(data_files + "states-symbols.json", orient="index")[0]
     rows = df.shape[0]
     # print(df.head(1), df.columns)
     statewise_map = {}
@@ -31,11 +32,11 @@ def bar_chart():
 
 
 def pcp_plot():
-    df = pd.read_csv(data_files + "data_10000.csv")
+    df = pd.read_csv(data_files + "US_Accidents_10000.csv")
     filter_cat_columns(df)
     df = df.fillna(0)
     labelled_data = k_means(df.to_json())
-    file = pd.read_csv(data_files + "data_10000.csv")
+    file = pd.read_csv(data_files + "US_Accidents_10000.csv")
     print(filter_unique_cols(file))
     file['label'] = labelled_data[:, -1:]
     file = file.fillna(0)

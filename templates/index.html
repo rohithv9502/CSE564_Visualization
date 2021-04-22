@@ -2,29 +2,29 @@
 <html lang="en" dir="ltr">
   <head>
   <meta charset="utf-8">
-    
- 	<script src='https://d3js.org/d3.v4.min.js'></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="{{url_for('static', filename='map.js')}}"></script>
+  <script src='https://d3js.org/d3.v4.min.js'></script>
+
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/index.css') }}">
 <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='index.css')}}"></link>
 
-  </head>
-  
-  <body >
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+  <body>
     <script>
       var statewise_accidents = JSON.parse('{{statewise_accidents|safe}}');
     </script>
   <script src="{{url_for('static', filename='/js/index.js')}}")></script>
-  
-
 
   </body>
-   
+
 </html>
 
 

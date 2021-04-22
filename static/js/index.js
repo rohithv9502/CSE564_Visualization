@@ -1,9 +1,11 @@
 var div=d3.select("body")
 .append("div")
 .attr("id","barchart")
+.attr("class","barchart")
+
 var svg=div.append("svg")
 .attr("id","barsvg")
-.attr("width",2000)
+.attr("width",1000)
 .attr("height",500)
 var margin=100;
     width=svg.attr("width")-margin,
@@ -14,8 +16,8 @@ var margin=100;
 
  var xCatScale= d3.scaleBand().range([0,width-50]);
  var yLinearScale=d3.scaleLinear().range([height-100,50])
- //barchart()
- pcpPlot()
+ barchart()
+ //pcpPlot()
  function barchart(){
     constructXY()
     plotCatXScale();

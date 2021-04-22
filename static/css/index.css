@@ -22,3 +22,8 @@
     stroke: #fff;
     shape-rendering: crispEdges;
   }
+
+.barchart {
+    position:relative;
+    left:1000px;
+}
