@@ -35,7 +35,9 @@ var color = d3.scale.linear()
 var legendText = ["High", "Medium", "Low", "None"];
 
 //Create SVG element and append map to the SVG
-var svg = d3.select("body")
+var mapSvg = d3.select("body")
+	.append("div")
+	.attr("class","map")
 			.append("svg")
 			.attr("width", width)
 			.attr("height", height);
@@ -75,7 +77,7 @@ for (var i = 0; i < data.length; i++) {
 }
 
 // Bind the data to the SVG and create one path per GeoJSON feature
-svg.selectAll("path")
+mapSvg.selectAll("path")
 	.data(json.features)
 	.enter()
 	.append("path")
@@ -127,7 +129,7 @@ svg.selectAll("path")
 // Map the cities I have lived in!
 d3.json("/stateAccidentData", function(data) {
 console.log("accident data",data)
-svg.selectAll("circle")
+mapSvg.selectAll("circle")
 	.data(data)
 	.enter()
 	.append("circle")
@@ -138,7 +140,7 @@ svg.selectAll("circle")
 		return projection([d.Start_Lng, d.Start_Lat])[1];
 	})
 	.attr("r", function(d) {
-		return d.Severity*d.Severity;
+		return 1;
 	})
 		.style("fill", "rgb(255,0,0)")	
 		.style("opacity", 0.85)	

@@ -27,3 +27,9 @@ path:hover {
     left: 800px;
     top: 350px;
   }
+
+  .map {
+    position: absolute;
+    left: 20px;
+    top: 50px;
+  }
