@@ -36,6 +36,8 @@ var legendText = ["High", "Medium", "Low", "None"];
 
 //Create SVG element and append map to the SVG
 var svg = d3.select("body")
+            .append("div")
+            .attr("class","map")
 			.append("svg")
 			.attr("width", width)
 			.attr("height", height);

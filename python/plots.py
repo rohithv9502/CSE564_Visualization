@@ -51,7 +51,9 @@ def k_means(data):
     # print(dnum)
     scalar = StandardScaler()
     dnum = scalar.fit_transform(dnum)
-    kmeans = KMeans(n_clusters=4, random_state=0).fit(dnum)
+    kmeans = KMeans(n_clusters=3, random_state=0).fit(dnum)
+    print(kmeans.inertia_)
+    pdData['label'] = kmeans.labels_
     X = []
     Y = []
     for i in range(10):
@@ -63,7 +65,7 @@ def k_means(data):
     #plt.plot(np.array(X), np.array(Y))
     #plt.show()
 
-    pdData['label'] = kmeans.labels_
+
 
     return pdData.values
 

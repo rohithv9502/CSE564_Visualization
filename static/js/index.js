@@ -1,23 +1,40 @@
-var div=d3.select("body")
+var bar_div=d3.select("body")
 .append("div")
 .attr("id","barchart")
 .attr("class","barchart")
 
-var svg=div.append("svg")
+var svg=bar_div.append("svg")
 .attr("id","barsvg")
-.attr("width",1000)
+.attr("width",900)
 .attr("height",500)
+
 var margin=100;
     width=svg.attr("width")-margin,
     height=svg.attr("height")-margin;
     console.log(width,height);
 
+var pcp_div=d3.select("body")
+    .append("div")
+    .attr("id","pcp")
+    .attr("class","pcp")
+    
+var pcp_svg=pcp_div.append("svg")
+    .attr("id","pcpsvg")
+    .attr("width",1500)
+    .attr("height",500)
+
+var pcp_margin=100;
+    pcp_width=pcp_svg.attr("width")-pcp_margin,
+    pcp_height=pcp_svg.attr("height")-pcp_margin;
+    console.log(pcp_width,pcp_height);
+
  var g=svg.append("g").attr("transform","translate(0,0)");
+ var pcp_g=pcp_svg.append("g").attr("transform","translate(0,0)");
 
  var xCatScale= d3.scaleBand().range([0,width-50]);
  var yLinearScale=d3.scaleLinear().range([height-100,50])
  barchart()
- //pcpPlot()
+ pcpPlot()
  function barchart(){
     constructXY()
     plotCatXScale();
@@ -164,13 +181,13 @@ function pcpPlot(){
             //console.log(col,d3.min(data.data,d=>d[i]),d3.max(data.data,d=>d[i]))
             y[col]=d3.scaleLinear()
             .domain([d3.min(data,d=>d[col]),d3.max(data,d=>d[col])])
-            .range([height,50])
+            .range([pcp_height,50])
             numeric[col]=true
            }
            else{
                y[col]=d3.scaleBand()
                .domain(data.map(d=>d[col]))
-               .range([height,50])
+               .range([pcp_height,50])
                numeric[col]=false
            }
 
@@ -178,11 +195,11 @@ function pcpPlot(){
 
 
         var xPointScale=d3.scalePoint()
-        .range([50,width-50])
+        .range([50,pcp_width-50])
         .domain(dimensions);
         
 
-        var color = ["gold", "blue", "green", "yellow", "black", "grey", "darkgreen", "pink", "brown", "slateblue", "grey1", "orange"]
+        var color = ["slateblue", "green", "orange","yellow", "black", "grey", "darkgreen", "pink", "brown", "slateblue", "grey1","gold",]
         
 // Add grey background lines for context.
 // background = svg.append("g")
@@ -191,8 +208,8 @@ function pcpPlot(){
 // .data(data)
 // .enter().append("path")
 // .attr("d", path);
-
-        var paths=g.selectAll("myPath")
+        
+        var paths=pcp_g.selectAll("myPath")
         .data(data)
         .attr("class", "foreground")
         .enter()
@@ -202,7 +219,7 @@ function pcpPlot(){
         .style("stroke", d=>color[d["label"]])
         .style("opacity",0.5)
         
-        var grp=g.selectAll("myAxis")
+        var grp=pcp_g.selectAll("myAxis")
 
     .data(dimensions).enter()
     .append("g")
@@ -217,7 +234,7 @@ function pcpPlot(){
       //  background.attr("visibility", "hidden");
     })
     .on("drag",function(d){
-        dragging[d]=Math.min(width,Math.max(0,d3.event.x));
+        dragging[d]=Math.min(pcp_width,Math.max(0,d3.event.x));
         paths.attr("d",path);
         dimensions.sort(function(a,b){ return position(a)-position(b);})
         xPointScale.domain(dimensions);
