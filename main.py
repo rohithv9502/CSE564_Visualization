@@ -1,5 +1,9 @@
 from flask import Flask, render_template, jsonify
 import sys, os
+
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
 from python.plots import bar_chart, pcp_plot
 import pandas as pd
 import numpy as np
@@ -18,10 +22,9 @@ def main_app():
 @app.route('/stateAccidentData', methods=["GET"])
 def state_accidents_data():
     df = pd.read_csv('US_Accidents_10000.csv')
-    x = df.iloc[0:, :].values
-    columns = df.columns.values[1:3]
-    accidents = df.to_dict(orient='records')
     accident_coordinates = df[['Start_Lat', 'Start_Lng', 'City', 'Severity']]
+    #print("Accidentd",accident_coordinates)
+    #print(json.dumps(accident_coordinates.to_dict(orient='records')))
     return json.dumps(accident_coordinates.to_dict(orient='records'))
 
 
@@ -59,6 +62,55 @@ def get_unfiltered_data():
     data = pcp_plot()
     # print(data)
     return data
+
+@app.route("/biplotdata",methods=["GET"])
+def biplotdata():
+    df = pd.read_csv('Processed_100000_1.csv')
+    df =df[['Temperature(F)','Wind_Chill(F)','Humidity(%)','Pressure(in)','Visibility(mi)','Wind_Speed(mph)','Precipitation(in)']]
+    x=df
+    columns = df.columns.values[:]
+    n = 4
+    print("x",x)
+    census_data = df.to_dict(orient='records')
+    x = StandardScaler().fit_transform(x)
+    census_data = json.dumps(census_data, indent=2)
+    pca = PCA(n_components=n)
+    principalComponents = pca.fit_transform(x)
+    eigenVectors = pca.components_
+    eigenValues = pca.explained_variance_
+    principalDf = pd.DataFrame(data=principalComponents)
+
+    eigenValueSum = np.sum(eigenValues)
+    eigenValuesPerCent = np.zeros(n)
+    cummulativeSum = np.zeros(n)
+    cumSum = 0
+    for i in range(n):
+        eigenValuesPerCent[i] = eigenValues[i] / eigenValueSum * 100
+        cumSum = cumSum + eigenValuesPerCent[i]
+        cummulativeSum[i] = cumSum
+    PCA1 = eigenVectors[0]
+    PCA2 = eigenVectors[1]
+
+    n = PCA1.size
+
+    rows, cols = x.shape
+
+    data_points = np.zeros((rows, 2))
+
+    x = StandardScaler().fit_transform(x)
+
+    for i in range(rows):
+        xsum = 0
+        ysum = 0
+        for j in range(cols):
+            xsum = xsum + x[i][j] * PCA1[j]
+            ysum = ysum + x[i][j] * PCA2[j]
+        data_points[i][0] = xsum
+        data_points[i][1] = ysum
+
+
+    eigen = {'PCA1': eigenVectors[0].tolist(), 'PCA2': eigenVectors[1].tolist(),'datapoints':data_points.tolist(),'columns':columns.tolist()}
+    return jsonify(eigen)
 
 
 if __name__ == "__main__":

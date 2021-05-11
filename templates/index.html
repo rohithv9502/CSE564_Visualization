@@ -5,7 +5,16 @@
 <!--  <script src="https://d3js.org/d3.v3.min.js"></script>-->
 <!--    <script src="{{url_for('static', filename='map.js')}}"></script>-->
   <script src='https://d3js.org/d3.v4.min.js'></script>
-
+  <script src="https://d3js.org/d3-array.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+  
+  <script src="https://d3js.org/d3-selection.v1.min.js"></script>
+  
+  <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+  <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+  <script src="https://d3js.org/d3-request.v1.min.js"></script>
+  
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/index.css') }}">
@@ -18,10 +27,10 @@
 </head>
 
   <body style="background-color:aliceblue">
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+<!--    <script src="https://d3js.org/d3.v3.min.js"></script>-->
     <script src="{{url_for('static', filename='map.js')}}"></script>
     <script src='https://d3js.org/d3.v4.min.js'></script>
-
+    <script src="{{url_for('static', filename='/js/biplot.js')}}"></script>
     <script>
       var statewise_accidents = JSON.parse('{{statewise_accidents|safe}}');
     </script>

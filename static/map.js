@@ -19,17 +19,17 @@ var height = 500;
 
 
 // D3 Projection
-var projection = d3.geo.albersUsa()
+var projection = d3.geoAlbersUsa()
 				   .translate([width/2, height/2])    // translate to center of screen
 				   .scale([1000]);          // scale things down so see entire US
         
 // Define path generator
-var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
+var path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
 		  	 .projection(projection);  // tell path generator to use albersUsa projection
 
 		
 // Define linear scale for output
-var color = d3.scale.linear()
+var color = d3.scaleLinear()
 			  .range(["rgba(7, 122, 237,0.4)","rgba(7, 122, 237,0.60)","rgba(7, 122, 237,0.80)","rgba(7, 122, 237,1)"]);
 
 var legendText = ["High", "Medium", "Low", "None"];
@@ -87,8 +87,16 @@ mapSvg.selectAll(".mapPath")
 	.attr("d", path)
 	.style("stroke", "#fff")
 	.style("stroke-width", "1")
+	on("mouseclick", function (d) {
+		d3.select(".tooltip").transition()
+		  .duration(200)
+		  .style("opacity", .9);
+		div.text(d.properties.name)
+		  .style("left", (d3.event.pageX) + "px")
+		  .style("top", (d3.event.pageY - 28) + "px");
+	  })
 	.on("mouseover", function (d) {
-		div.transition()
+		d3.select(".tooltip").transition()
 		  .duration(200)
 		  .style("opacity", .9);
 		div.text(d.properties.name)
@@ -98,7 +106,7 @@ mapSvg.selectAll(".mapPath")
 
 	  // fade out tooltip on mouse out               
 	  .on("mouseout", function (d) {
-		div.transition()
+		d3.select(".tooltip").transition()
 		  .duration(500)
 		  .style("opacity", 0);
 	  })
@@ -151,7 +159,7 @@ mapSvg.selectAll("circle")
 	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
 	// http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
 	.on("mouseover", function(d) {      
-    	div.transition()        
+    	d3.select(".tooltip").transition()        
       	   .duration(200)      
            .style("opacity", .9);      
            div.text(d.City)
@@ -161,7 +169,7 @@ mapSvg.selectAll("circle")
 
     // fade out tooltip on mouse out               
     .on("mouseout", function(d) {       
-        div.transition()        
+        d3.select(".tooltip").transition()        
            .duration(500)      
            .style("opacity", 0);   
     });
