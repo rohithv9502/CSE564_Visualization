@@ -51,10 +51,10 @@ d3.json("/biplotdata", function(data) {
     //x_axis_domain[0] = d3.min(PCA1,d=>{return parseFloat(d)});
   
     x_axis_domain[1] = d3.max(PCA1,d=>{
-    return parseFloat(d)})*2;
+    return parseFloat(d)*2});
   
     y_axis_domain[0] = d3.min(PCA2,d=>{
-    return parseFloat(d)})*2;
+    return parseFloat(d)*2});
   
     y_axis_domain[1] = d3.max(PCA2,d=>{
     return parseFloat(d)})*2;
