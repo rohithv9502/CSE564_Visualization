@@ -50,6 +50,12 @@ var dimensions = [
     type: types["Number"]
   },
   {
+    key: "Temperature(F)",
+    type: types["Number"],
+    description: "Temperature(F)",
+    type: types["Number"]
+  },
+  {
     key: "Wind_Speed(mph)",
     description: "Wind_Speed(mph)",
     type: types["Number"]
@@ -60,12 +66,7 @@ var dimensions = [
     description: "Visibility(mi)",
     type: types["Number"]
   },
-  {
-    key: "Temperature(F)",
-    type: types["Number"],
-    description: "Temperature(F)",
-    type: types["Number"]
-  },
+
   {
     key: "Humidity(%)",
     description: "Humidity(%)",

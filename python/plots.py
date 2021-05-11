@@ -13,7 +13,7 @@ data_files = os.path.join(os.path.dirname(__file__), "../data/")
 
 
 def bar_chart():
-    # print("path in plotly",data_files)
+    #print("path in plotly",data_files)
     df = pd.read_csv(data_files + "US_Accidents.csv")
     print(pd.read_json(data_files + "states-symbols.json", orient="index"))
     states = pd.read_json(data_files + "states-symbols.json", orient="index")[0]
