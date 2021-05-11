@@ -28,6 +28,12 @@ path:hover {
     top: 350px;
   }
 
+  .bi-plot {
+    position: absolute;
+    left: 1000px;
+    top: 500px;
+  }
+
   .map {
     position: absolute;
     left: 20px;
