@@ -79,22 +79,23 @@ for (var i = 0; i < data.length; i++) {
 }
 
 // Bind the data to the SVG and create one path per GeoJSON feature
-mapSvg.selectAll(".mapPath")
-	.data(json.features)
-	.enter()
-	.append("path")
-	.attr("class","mapPath")
-	.attr("d", path)
-	.style("stroke", "#fff")
-	.style("stroke-width", "1")
-	on("mouseclick", function (d) {
-		d3.select(".tooltip").transition()
+	mapSvg.selectAll(".mapPath")
+		.data(json.features)
+		.enter()
+		.append("path")
+		.attr("class", "mapPath")
+		.attr("d", path)
+		.style("stroke", "#fff")
+		.style("stroke-width", "1")
+		.on('click', function (d) {
+			console.log("data", d)
+			d3.select(".tooltip").transition()
 		  .duration(200)
-		  .style("opacity", .9);
-		div.text(d.properties.name)
-		  .style("left", (d3.event.pageX) + "px")
-		  .style("top", (d3.event.pageY - 28) + "px");
-	  })
+				.style("opacity", .9);
+				div.text(d.properties.name)
+				.style("left", (d3.event.pageX) + "px")
+				.style("top", (d3.event.pageY - 28) + "px");
+		})
 	.on("mouseover", function (d) {
 		d3.select(".tooltip").transition()
 		  .duration(200)
