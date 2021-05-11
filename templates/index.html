@@ -2,8 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
   <meta charset="utf-8">
-<!--  <script src="https://d3js.org/d3.v3.min.js"></script>-->
-<!--    <script src="{{url_for('static', filename='map.js')}}"></script>-->
+
   <script src='https://d3js.org/d3.v4.min.js'></script>
   <script src="https://d3js.org/d3-array.v1.min.js"></script>
   <script src="https://d3js.org/d3-geo.v1.min.js"></script>
@@ -16,29 +15,31 @@
 
   <script src="https://d3js.org/topojson.v1.min.js"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/index.css') }}">
-
-  <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/pcp.css') }}">
   <script src="https://bl.ocks.org/syntagmatic/raw/3341641/render-queue.js"></script>
-<!-- jQuery library -->
+
+    <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='index.css')}}"></link>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/index.css') }}">
+    <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/pcp.css') }}">
+
+
+
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='index.css')}}">
+
+
 </head>
 
   <body style="background-color:aliceblue">
-<!--    <script src="https://d3js.org/d3.v3.min.js"></script>-->
+
   <h1 style="text-align: center;">US Road Accidents</h1>
 
-    <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="{{url_for('static', filename='map.js')}}"></script>
     <script src='https://d3js.org/d3.v4.min.js'></script>
     <script src="{{url_for('static', filename='/js/biplot.js')}}"></script>
-    <script>
-
 
      <script>
       var statewise_accidents = JSON.parse('{{statewise_accidents|safe}}');

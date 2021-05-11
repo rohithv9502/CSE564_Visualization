@@ -21,7 +21,7 @@ def main_app():
 
 @app.route('/stateAccidentData', methods=["GET"])
 def state_accidents_data():
-    df = pd.read_csv('US_Accidents_10000.csv')
+    df = pd.read_csv('US_Accidents.csv')
     accident_coordinates = df[['Start_Lat', 'Start_Lng', 'City', 'Severity']]
     #print("Accidentd",accident_coordinates)
     #print(json.dumps(accident_coordinates.to_dict(orient='records')))
@@ -39,7 +39,7 @@ def get_geo_data():
 
 @app.route('/states', methods=['GET'])
 def get_states():
-    df = pd.read_csv('US_Accidents_10000.csv')
+    df = pd.read_csv('US_Accidents.csv')
     x = df.iloc[0:, :].values
     accidents = df.to_dict(orient='records')
     # print("Accidents",accidents)
@@ -65,7 +65,7 @@ def get_unfiltered_data():
 
 @app.route("/biplotdata",methods=["GET"])
 def biplotdata():
-    df = pd.read_csv('Processed_100000_1.csv')
+    df = pd.read_csv('US_Accidents.csv')
     df =df[['Temperature(F)','Wind_Chill(F)','Humidity(%)','Pressure(in)','Visibility(mi)','Wind_Speed(mph)','Precipitation(in)']]
     x=df
     columns = df.columns.values[:]
@@ -109,7 +109,8 @@ def biplotdata():
         data_points[i][1] = ysum
 
 
-    eigen = {'PCA1': eigenVectors[0].tolist(), 'PCA2': eigenVectors[1].tolist(),'datapoints':data_points.tolist(),'columns':columns.tolist()}
+    eigen = {'PCA1': eigenVectors[0].tolist(), 'PCA2': eigenVectors[1].tolist(),'columns':columns.tolist()}
+    print(eigen)
     return jsonify(eigen)
 
 
