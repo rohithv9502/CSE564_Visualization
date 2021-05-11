@@ -9,6 +9,9 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/index.css') }}">
+
+  <link  rel="stylesheet" href= "{{ url_for('static',filename='/css/pcp.css') }}">
+  <script src="https://bl.ocks.org/syntagmatic/raw/3341641/render-queue.js"></script>
 <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -18,14 +21,18 @@
 </head>
 
   <body style="background-color:aliceblue">
+  <h1 style="text-align: center;">US Road Accidents</h1>
+  
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="{{url_for('static', filename='map.js')}}"></script>
     <script src='https://d3js.org/d3.v4.min.js'></script>
+    
 
-    <script>
+     <script>
       var statewise_accidents = JSON.parse('{{statewise_accidents|safe}}');
     </script>
-  <script src="{{url_for('static', filename='/js/index.js')}}")></script>
+  <script src="{{url_for('static', filename='/js/index.js')}}")></script> 
+  <script src="{{url_for('static', filename='/js/pcp.js')}}"></script>
 
   </body>
 

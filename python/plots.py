@@ -38,21 +38,19 @@ def bar_chart():
 
 
 def pcp_plot():
-    df = pd.read_csv(data_files + "US_Accidents_10000.csv")
-    filter_cat_columns(df)
-    df = df.fillna(0)
-    labelled_data = k_means(df.to_json())
-    file = pd.read_csv(data_files + "US_Accidents_10000.csv")
+    #df = pd.read_csv(data_files + "US_Accidents_100000_1.csv")
+    #filter_cat_columns(df)
+    #df = df.fillna(0)
+    #labelled_data = k_means(df.to_json())
+    file = pd.read_csv(data_files + "US_Accidents_100000_1.csv")
     print(filter_unique_cols(file))
-    file['label'] = labelled_data[:, -1:]
+    #file['label'] = labelled_data[:, -1:]
     file = file.fillna(0)
     filter_bool(file)
-    print(file.columns.tolist())
+    print(file.columns.tolist(),len(file))
     file = file[
         ['Precipitation(in)', 'Wind_Speed(mph)', 'Visibility(mi)', 'Temperature(F)', 'Humidity(%)', 'Pressure(in)',
-         'Wind_Chill(F)',
-         'Source', 'Severity', 'TMC', 'Distance(mi)', 'Side',
-         'Timezone', 'label']]
+         'Wind_Chill(F)', 'Severity']]
     return json.dumps(list(file.T.to_dict().values()))
 
 
