@@ -116,6 +116,7 @@ for (var i = 0; i < data.length; i++) {
 		  pcpplot(false,d.properties.name)
 		  filter_data(d.properties.name)
 		  get_biplot(d.properties.name)
+		  sunBurst(d.properties.symbol)
 	  })
 	  // fade out tooltip on mouse out               
 	  .on("mouseout", function (d) {

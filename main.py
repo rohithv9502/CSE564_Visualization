@@ -1,3 +1,6 @@
+import csv
+from collections import defaultdict
+
 from flask import Flask, render_template, jsonify
 import sys, os
 
@@ -73,6 +76,73 @@ def get_unfiltered_data():
     # print(data)
     return data
 
+
+@app.route('/getDataSun')
+def getDataSun():
+    df = pd.read_csv("Sunburst_data.csv")
+    stateSymbol = request.args.get('stateSymbol', type=str)
+    # sun data
+
+    dfk = df.groupby(['Sunrise_Sunset', 'Severity'])['count'].sum().reset_index(name="accidents")
+    dfk.to_csv("states_accidents.csv")
+    if stateSymbol == 'All':
+        # dictionary
+        results = defaultdict(lambda: defaultdict(dict))
+        with open('states_accidents.csv') as csv_file:
+            for val in csv.DictReader(csv_file):
+                results[val['Sunrise_Sunset']][val['Severity']] = (float(val['accidents']))
+
+        output = {'name': 'TOTAL', 'children': []}
+
+        for k1, v1 in results.items():
+            children1 = []
+            for k2, v2 in v1.items():
+                children1.append({'name': k2, 'size': float(v2)})
+
+            output['children'].append({
+                'name': k1,
+                'children': children1
+
+            })
+
+        sundata = json.dumps(output)
+        print("output",output)
+        return sundata
+    else:
+        dfy = dfbystatesun(stateSymbol)
+        dfk1 = dfy.groupby(['Sunrise_Sunset', 'Severity'])['count'].sum().reset_index(name="accidents")
+        dfk1.to_csv("state_accidents.csv")
+        results1 = defaultdict(lambda: defaultdict(dict))
+
+        # nested dictionary
+        with open('state_accidents.csv') as csv_file:
+            for val in csv.DictReader(csv_file):
+                results1[val['Sunrise_Sunset']][val['Severity']] = (float(val['accidents']))
+
+        # json object
+        output1 = {'name': 'TOTAL', 'children': []}
+
+        for k1, v1 in results1.items():
+            children2 = []
+            for k2, v2 in v1.items():
+                children2.append({'name': k2, 'size': float(v2)})
+
+            output1['children'].append({
+                'name': k1,
+                'children': children2
+
+            })
+        sundata1 = json.dumps(output1)
+        return sundata1
+
+
+def dfbystatesun(stateSymbol):
+    print("stateSymbol")
+    df = pd.read_csv("Sunburst_data.csv")
+    print("Sunburst data",df)
+    dfc1= df[df['State'] ==stateSymbol]
+    print("dfc1",dfc1)
+    return dfc1
 
 @app.route('/getbiplotforstate',methods=["GET"])
 def getbiplotforstate():

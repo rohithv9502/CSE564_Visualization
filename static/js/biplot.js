@@ -71,7 +71,7 @@ d3.json("/biplotdata", function(data) {
         return parseFloat(d)
     }) ;
       
-      console.log("x_axis_domain", x_axis_bottom);
+      console.log("x_axis_domain", x_axis_domain);
       console.log("y_axis_domain", y_axis_domain);
   
   
@@ -139,9 +139,9 @@ d3.json("/biplotdata", function(data) {
         .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+90; }).
-        .attr("y", function (d) { return y_scale(d.y)+60; }).
-        text(function (d) { return d.label;});
+        .attr("y", function (d) { return y_scale(d.y)+90; })
+        .attr("y", function (d) { return y_scale(d.y)+60; })
+        .text(function (d) { return d.label;});
     
     
     lines

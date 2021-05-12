@@ -24,17 +24,26 @@
 
 
 
+function showArc()
+{
+    d3.json("/stateAccidentsCount", function (data) {
+	console.log("data",data)
+	statesData=data;
+}
+
+
+
 var arc1 = d3.arc()
             .innerRadius(80)
             .outerRadius(100)
             .startAngle(0)
-            .endAngle(10);
+            .endAngle(Math.PI);
 
             var arc2 = d3.arc()
             .innerRadius(80)
             .outerRadius(100)
-            .startAngle(10)
-            .endAngle(20);
+            .startAngle(Math.PI)
+            .endAngle(Math.PI*2);
 
         arcCounter.append("path")
             .attr("class", "arc")
@@ -46,4 +55,4 @@ var arc1 = d3.arc()
             .attr("class", "arc")
             .attr("d", arc2)
             .attr("transform", "translate(400,150)")
-            .attr("fill","darkblue");
+            .attr("fill","rgba(7, 122, 237,1)");

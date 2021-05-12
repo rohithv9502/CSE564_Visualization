@@ -52,8 +52,10 @@ path:hover {
     top: 40px;
   }
 
-  .arc-counter {
+
+  #sunburst svg {
     position: absolute;
-    left: 1200px;
-    top: 550px;
+    left: 1500px;
+    top: 600px;
   }
+
