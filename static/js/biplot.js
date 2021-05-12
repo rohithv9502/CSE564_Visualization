@@ -140,6 +140,7 @@ d3.json("/biplotdata", function(data) {
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
         .attr("y", function (d) { return y_scale(d.y)+90; }).
+        .attr("y", function (d) { return y_scale(d.y)+60; }).
         text(function (d) { return d.label;});
     
     
