@@ -52,6 +52,7 @@ var div = d3.select("body")
 
 // Load in my states data!
 d3.json("/states", function (statesData) {
+	console.log("st",statesData)
 	//console.log("stateAccidents",statesData.data)
 color.domain([0,1,2,3]); // setting the range of the input data
 	data = Object.keys(statesData);
@@ -71,6 +72,7 @@ for (var i = 0; i < data.length; i++) {
 
 		// Copy the data value into the JSON
 		json.features[j].properties.accidents = statesData[dataState]; 
+		json.features[j].properties.symbol = statesData[dataState+"_sym"];
 
 		// Stop looking through the JSON
 		break;
@@ -96,6 +98,7 @@ for (var i = 0; i < data.length; i++) {
 				.style("left", (d3.event.pageX) + "px")
 				.style("top", (d3.event.pageY - 28) + "px");
 		})
+		
 	.on("mouseover", function (d) {
 		d3.select(".tooltip").transition()
 		  .duration(200)
@@ -104,7 +107,11 @@ for (var i = 0; i < data.length; i++) {
 		  .style("left", (d3.event.pageX) + "px")
 		  .style("top", (d3.event.pageY - 28) + "px");
 	  })
-
+	  .on("click",function(d){
+		  console.log(d.properties.name)
+		  bar_chart(false,d.properties.symbol)
+		  pcpplot(false,d.properties.name)
+	  })
 	  // fade out tooltip on mouse out               
 	  .on("mouseout", function (d) {
 		d3.select(".tooltip").transition()

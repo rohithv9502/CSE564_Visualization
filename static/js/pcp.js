@@ -1,13 +1,24 @@
+var pcp_full_data=0;
+
 var margin = {top: 66, right: 110, bottom: 20, left: 70},
     width = 900 - margin.left - margin.right,
     height = 340 - margin.top - margin.bottom,
     innerHeight = height - 2;
+var container = d3.select("body").append("div")
+    .attr("class", "parcoords")
+    .style("width", width + margin.left + margin.right + "px")
+    .style("height", height + margin.top + margin.bottom + "px");
+
+pcpplot(true,"")
+
+function pcpplot(is_full_data,state){
+    container.remove()
 
 var devicePixelRatio = window.devicePixelRatio || 1;
 
-var pcp_color = d3.scaleOrdinal()
+var pcp_color = d3.scaleOrdinal(d3.schemeCategory20)
   .domain(["1", "2", "3", "4"])
-  .range(["#B59248", "#50AB84", "#725D82", "#E15E5A"])
+  //.range(["#B59248", "#50AB84", "#725D82", "#E15E5A"])
 //   .range(["#DB7F85", "#50AB84", "#4C6C86", "#C47DCB", "#B59248", "#DD6CA7", "#E15E5A", "#5DA5B3", "#725D82", "#54AF52", "#954D56", "#8C92E8", "#D8597D", "#AB9C27", "#D67D4B", "#D58323", "#BA89AD", "#357468", "#8F86C2", "#7D9E33", "#517C3F", "#9D5130", "#5E9ACF", "#776327", "#944F7E"]);
 
 var types = {
@@ -33,6 +44,7 @@ var types = {
     defaultScale: d3.scaleTime().range([innerHeight, 0])
   }
 };
+
 
 var dimensions = [
   {
@@ -81,12 +93,7 @@ var dimensions = [
     key: "Wind_Chill(F)",
     description: "Wind_Chill(F)",
     type: types["Number"]
-  },
-//   {
-//     key: "Severity",
-//     description: "Severity",
-//     type: types["String"]
-//   },
+  }
 ];
 
 
@@ -96,12 +103,12 @@ var xscale = d3.scalePoint()
 
 var yAxis = d3.axisLeft();
 
-var container = d3.select("body").append("div")
+container = d3.select("body").append("div")
     .attr("class", "parcoords")
     .style("width", width + margin.left + margin.right + "px")
     .style("height", height + margin.top + margin.bottom + "px");
 
-var svg = container.append("svg")
+var pcp_svg = container.append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -123,14 +130,24 @@ ctx.scale(devicePixelRatio, devicePixelRatio);
 
 //var output = d3.select("body").append("pre");
 
-var axes = svg.selectAll(".axis")
+var axes = pcp_svg.selectAll(".axis")
     .data(dimensions)
   .enter().append("g")
     .attr("class", function(d) { return "axis " + d.key.replace(/ /g, "_"); })
     .attr("transform", function(d,i) { return "translate(" + xscale(i) + ")"; });
 
 
+
 d3.json("/get-full-data", function(error, data) {
+    if(is_full_data){
+        pcp_full_data=data
+    }
+    else{
+        console.log(data[0].State,data[0].State=='ND',state)
+        data = data.filter( function(d) {
+            return d.State==state;
+          } );
+    }
   if (error) throw error;
 
   data.forEach(function(d) {
@@ -253,7 +270,7 @@ d3.json("/get-full-data", function(error, data) {
     render.invalidate();
 
     var actives = [];
-    svg.selectAll(".axis .brush")
+    pcp_svg.selectAll(".axis .brush")
       .filter(function(d) {
         return d3.brushSelection(this);
       })
@@ -277,7 +294,7 @@ d3.json("/get-full-data", function(error, data) {
     // show ticks for active brush dimensions
     // and filter ticks to only those within brush extents
     /*
-    svg.selectAll(".axis")
+    pcp_svg.selectAll(".axis")
         .filter(function(d) {
           return actives.indexOf(d) > -1 ? true : false;
         })
@@ -293,7 +310,7 @@ d3.json("/get-full-data", function(error, data) {
         });
 
     // reset dimensions without active brushes
-    svg.selectAll(".axis")
+    pcp_svg.selectAll(".axis")
         .filter(function(d) {
           return actives.indexOf(d) > -1 ? false : true;
         })
@@ -309,7 +326,7 @@ d3.json("/get-full-data", function(error, data) {
     //output.text(d3.tsvFormat(selected.slice(0,24)));
   }
 });
-
+}
 function d3_functor(v) {
   return typeof v === "function" ? v : function() { return v; };
 };

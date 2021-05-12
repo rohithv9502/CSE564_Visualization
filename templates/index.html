@@ -37,15 +37,16 @@
 
   <h1 style="text-align: center;">US Road Accidents</h1>
 
-    <script src="{{url_for('static', filename='map.js')}}"></script>
+    
     <script src='https://d3js.org/d3.v4.min.js'></script>
     <script src="{{url_for('static', filename='/js/biplot.js')}}"></script>
 
      <script>
       var statewise_accidents = JSON.parse('{{statewise_accidents|safe}}');
     </script>
-  <script src="{{url_for('static', filename='/js/index.js')}}")></script>
+  <script src="{{url_for('static', filename='/js/bar.js')}}")></script>
   <script src="{{url_for('static', filename='/js/pcp.js')}}"></script>
+  <script src="{{url_for('static', filename='map.js')}}"></script>
 
   </body>
 

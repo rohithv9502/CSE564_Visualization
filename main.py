@@ -1,10 +1,11 @@
 from flask import Flask, render_template, jsonify
 import sys, os
 
+from flask import request
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
-from python.plots import bar_chart, pcp_plot
+from python.plots import bar_chart, pcp_plot, county_bar_chart
 import pandas as pd
 import numpy as np
 import json
@@ -13,9 +14,11 @@ app = Flask(__name__)
 
 data_files = os.path.join(os.path.dirname(__file__), "/data/")
 
+
 @app.route('/', methods=["GET"])
 def main_app():
     statewise_accidents = bar_chart()
+    # print("statewise_accidents",statewise_accidents)
     return render_template('index.html', statewise_accidents=statewise_accidents)
 
 
@@ -23,8 +26,8 @@ def main_app():
 def state_accidents_data():
     df = pd.read_csv('US_Accidents.csv')
     accident_coordinates = df[['Start_Lat', 'Start_Lng', 'City', 'Severity']]
-    #print("Accidentd",accident_coordinates)
-    #print(json.dumps(accident_coordinates.to_dict(orient='records')))
+    # print("Accidentd",accident_coordinates)
+    # print(json.dumps(accident_coordinates.to_dict(orient='records')))
     return json.dumps(accident_coordinates.to_dict(orient='records'))
 
 
@@ -48,12 +51,14 @@ def get_states():
     f.close()
     states_dict = {}
     for index, row in df.iterrows():
+        state_sym = row['State']
         state = data[row['State']]
         if (state in states_dict):
             count = states_dict[state]
             states_dict[state] = count + 1
         else:
             states_dict[state] = 1
+            states_dict[state+"_sym"] = state_sym
     return jsonify(states_dict)
 
 
@@ -63,14 +68,16 @@ def get_unfiltered_data():
     # print(data)
     return data
 
-@app.route("/biplotdata",methods=["GET"])
+
+@app.route("/biplotdata", methods=["GET"])
 def biplotdata():
     df = pd.read_csv('US_Accidents.csv')
-    df =df[['Temperature(F)','Wind_Chill(F)','Humidity(%)','Pressure(in)','Visibility(mi)','Wind_Speed(mph)','Precipitation(in)']]
-    x=df
+    df = df[['Temperature(F)', 'Wind_Chill(F)', 'Humidity(%)', 'Pressure(in)', 'Visibility(mi)', 'Wind_Speed(mph)',
+             'Precipitation(in)']]
+    x = df
     columns = df.columns.values[:]
     n = 4
-    print("x",x)
+    print("x", x)
     census_data = df.to_dict(orient='records')
     x = StandardScaler().fit_transform(x)
     census_data = json.dumps(census_data, indent=2)
@@ -108,11 +115,17 @@ def biplotdata():
         data_points[i][0] = xsum
         data_points[i][1] = ysum
 
-
-    eigen = {'PCA1': eigenVectors[0].tolist(), 'PCA2': eigenVectors[1].tolist(),'columns':columns.tolist()}
+    eigen = {'PCA1': eigenVectors[0].tolist(), 'PCA2': eigenVectors[1].tolist(), 'columns': columns.tolist()}
     print(eigen)
     return jsonify(eigen)
 
+
+@app.route("/countybar",methods=["GET"])
+def county_map():
+    state_sym=request.args.get('state_sym')
+    print("State_Symbol",state_sym)
+    counties_accidents = county_bar_chart(state_sym)
+    return counties_accidents
 
 if __name__ == "__main__":
     app.run(debug=True)
