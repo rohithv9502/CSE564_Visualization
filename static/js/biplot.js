@@ -1,5 +1,16 @@
 
 
+function get_biplot(stateName)
+{
+    console.log("Biplot");
+    d3.json("/getbiplotforstate?state="+stateName, function(data) {
+        console.log(data);
+        showBiPlot(data.PCA1,data.PCA2,data.columns,data.datapoints)
+      
+    });
+}
+
+
 d3.json("/biplotdata", function(data) {
     console.log(data);
     showBiPlot(data.PCA1,data.PCA2,data.columns,data.datapoints)
@@ -128,7 +139,7 @@ d3.json("/biplotdata", function(data) {
         .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+60; }).
+        .attr("y", function (d) { return y_scale(d.y)+90; }).
         text(function (d) { return d.label;});
     
     

@@ -50,9 +50,12 @@ var div = d3.select("body")
     		.attr("class", "tooltip")               
     		.style("opacity", 0);
 
+var statesSymbols;
+
 // Load in my states data!
 d3.json("/states", function (statesData) {
 	console.log("st",statesData)
+	statesSymbols=statesData;
 	//console.log("stateAccidents",statesData.data)
 color.domain([0,1,2,3]); // setting the range of the input data
 	data = Object.keys(statesData);
@@ -111,6 +114,8 @@ for (var i = 0; i < data.length; i++) {
 		  console.log(d.properties.name)
 		  bar_chart(false,d.properties.symbol)
 		  pcpplot(false,d.properties.name)
+		  filter_data(d.properties.name)
+		  get_biplot(d.properties.name)
 	  })
 	  // fade out tooltip on mouse out               
 	  .on("mouseout", function (d) {
@@ -144,11 +149,34 @@ for (var i = 0; i < data.length; i++) {
 	}
 });
 
-		 
-// Map the cities I have lived in!
-d3.json("/stateAccidentData", function(data) {
-console.log("accident data",data)
-mapSvg.selectAll("circle")
+var stateAccidentData;
+
+function getStateAccidentData()
+{
+    d3.json("/stateAccidentData", function(data) {
+    stateAccidentData=data;
+    mapCities(stateAccidentData);
+    })
+
+}
+
+
+function filter_data(stateName)
+{
+    console.log(stateAccidentData);
+    stateData=stateAccidentData.filter(function(d){
+    return d.State_Name==stateName;
+    });
+    console.log(stateData);
+    mapCities(stateData);
+}
+
+function mapCities(data)
+{
+
+    mapSvg.selectAll("circle").remove();
+
+    mapSvg.selectAll("circle")
 	.data(data)
 	.enter()
 	.append("circle")
@@ -161,27 +189,32 @@ mapSvg.selectAll("circle")
 	.attr("r", function(d) {
 		return 1;
 	})
-		.style("fill", "rgb(255,0,0)")	
-		.style("opacity", 0.85)	
+		.style("fill", "rgb(255,0,0)")
+		.style("opacity", 0.85)
 
-	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks" 
+	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks"
 	// http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
-	.on("mouseover", function(d) {      
-    	d3.select(".tooltip").transition()        
-      	   .duration(200)      
-           .style("opacity", .9);      
+	.on("mouseover", function(d) {
+    	d3.select(".tooltip").transition()
+      	   .duration(200)
+           .style("opacity", .9);
            div.text(d.City)
-           .style("left", (d3.event.pageX) + "px")     
-           .style("top", (d3.event.pageY - 28) + "px");    
-	})   
+           .style("left", (d3.event.pageX) + "px")
+           .style("top", (d3.event.pageY - 28) + "px");
+	})
 
-    // fade out tooltip on mouse out               
-    .on("mouseout", function(d) {       
-        d3.select(".tooltip").transition()        
-           .duration(500)      
-           .style("opacity", 0);   
+    // fade out tooltip on mouse out
+    .on("mouseout", function(d) {
+        d3.select(".tooltip").transition()
+           .duration(500)
+           .style("opacity", 0);
     });
-});  
+
+}
+
+
+getStateAccidentData();
+
         
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
 var legend = d3.select("body").append("svg")
@@ -208,3 +241,4 @@ var legend = d3.select("body").append("svg")
 	});
 
 });
+
