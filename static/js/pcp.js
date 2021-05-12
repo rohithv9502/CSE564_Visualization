@@ -1,13 +1,13 @@
 var pcp_full_data=0;
 
-var margin = {top: 66, right: 110, bottom: 20, left: 70},
-    width = 900 - margin.left - margin.right,
-    height = 340 - margin.top - margin.bottom,
-    innerHeight = height - 2;
+var pcp_margin = {top: 66, right: 110, bottom: 20, left: 70},
+    pcp_width = 900 - pcp_margin.left - pcp_margin.right,
+    pcp_height = 340 - pcp_margin.top - pcp_margin.bottom,
+    innerHeight = pcp_height - 2;
 var container = d3.select("body").append("div")
     .attr("class", "parcoords")
-    .style("width", width + margin.left + margin.right + "px")
-    .style("height", height + margin.top + margin.bottom + "px");
+    .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
+    .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
 
 pcpplot(true,"")
 
@@ -99,28 +99,28 @@ var dimensions = [
 
 var xscale = d3.scalePoint()
     .domain(d3.range(dimensions.length))
-    .range([0, width]);
+    .range([0, pcp_width]);
 
 var yAxis = d3.axisLeft();
 
 container = d3.select("body").append("div")
     .attr("class", "parcoords")
-    .style("width", width + margin.left + margin.right + "px")
-    .style("height", height + margin.top + margin.bottom + "px");
+    .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
+    .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
 
 var pcp_svg = container.append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", pcp_width + pcp_margin.left + pcp_margin.right)
+    .attr("height", pcp_height + pcp_margin.top + pcp_margin.bottom)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + pcp_margin.left + "," + pcp_margin.top + ")");
 
 var canvas = container.append("canvas")
-    .attr("width", width * devicePixelRatio)
-    .attr("height", height * devicePixelRatio)
-    .style("width", width + "px")
-    .style("height", height + "px")
-    .style("margin-top", margin.top + "px")
-    .style("margin-left", margin.left + "px");
+    .attr("width", pcp_width * devicePixelRatio)
+    .attr("height", pcp_height * devicePixelRatio)
+    .style("width", pcp_width + "px")
+    .style("height", pcp_height + "px")
+    .style("margin-top", pcp_margin.top + "px")
+    .style("margin-left", pcp_margin.left + "px");
 
 var ctx = canvas.node().getContext("2d");
 ctx.globalCompositeOperation = 'darken';
@@ -178,7 +178,7 @@ d3.json("/get-full-data", function(error, data) {
 
   var render = renderQueue(draw).rate(30);
 
-  ctx.clearRect(0,0,width,height);
+  ctx.clearRect(0,0,pcp_width,pcp_height);
   ctx.globalAlpha = d3.min([1.15/Math.pow(data.length,0.3),1]);
   render(data);
 
@@ -199,7 +199,7 @@ d3.json("/get-full-data", function(error, data) {
       .attr("class", "brush")
       .each(function(d) {
         d3.select(this).call(d.brush = d3.brushY()
-          .extent([[-10,0], [10,height]])
+          .extent([[-10,0], [10,pcp_height]])
           .on("start", brushstart)
           .on("brush", brush)
           .on("end", brush)
@@ -319,7 +319,7 @@ d3.json("/get-full-data", function(error, data) {
           .style("display", null);
     */
 
-    ctx.clearRect(0,0,width,height);
+    ctx.clearRect(0,0,pcp_width,pcp_height);
     ctx.globalAlpha = d3.min([0.85/Math.pow(selected.length,0.3),1]);
     render(selected);
 
