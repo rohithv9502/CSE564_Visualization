@@ -30,12 +30,24 @@ path:hover {
 
   .bi-plot {
     position: absolute;
-    left: 1000px;
-    top: 500px;
+    left: 800px;
+    top: 550px;
   }
 
   .map {
     position: absolute;
     left: 20px;
-    top: 0px;
+    top: 40px;
+  }
+
+  .parcoords {
+    position: absolute;
+    left: 20px;
+    top: 550px;
+  }
+
+  .barchart {
+    position: absolute;
+    left: 1000px;
+    top: 40px;
   }
