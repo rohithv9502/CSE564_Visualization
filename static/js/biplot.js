@@ -21,13 +21,13 @@ d3.json("/biplotdata", function(data) {
   
   
   
-    var margin = { left: 50, top: 50, bottom: 50, right: 50 };
+    var margin = { left: 50, top: 100, bottom: 50, right: 50 };
   
-    var svgWidth = 500;
+    var svgWidth = 550;
   
     var padding = 10;
   
-    var svgHeight = 500;
+    var svgHeight = 340;
   
     var height = 254;
   
@@ -42,23 +42,23 @@ d3.json("/biplotdata", function(data) {
       .attr("height", svgHeight)
       .attr("width", svgWidth)
       .attr("transform", "translate(150,50)");
-    
+
   
     var x_axis_domain=[0,0];
     
     var y_axis_domain=[0,0];
     
-    //x_axis_domain[0] = d3.min(PCA1,d=>{return parseFloat(d)});
+    x_axis_domain[0] = d3.min(PCA1,d=>{return parseFloat(d)});
   
     x_axis_domain[1] = d3.max(PCA1,d=>{
-    return parseFloat(d)*2});
+    return parseFloat(d)});
   
     y_axis_domain[0] = d3.min(PCA2,d=>{
-    return parseFloat(d)*2});
+    return parseFloat(d)});
   
     y_axis_domain[1] = d3.max(PCA2,d=>{
         return parseFloat(d)
-    }) * 2;
+    }) ;
       
       console.log("x_axis_domain", x_axis_bottom);
       console.log("y_axis_domain", y_axis_domain);
@@ -125,10 +125,10 @@ d3.json("/biplotdata", function(data) {
     
       labels
       .style("stroke", function (d, i) { return color(i); })
-        .attr("x", function (d) { return x_scale(d.x) ; })
+        .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+50; }).
+        .attr("y", function (d) { return y_scale(d.y)+60; }).
         text(function (d) { return d.label;});
     
     
