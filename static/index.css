@@ -51,3 +51,9 @@ path:hover {
     left: 1000px;
     top: 40px;
   }
+
+  .arc-counter {
+    position: absolute;
+    left: 1200px;
+    top: 550px;
+  }

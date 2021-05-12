@@ -40,9 +40,9 @@ d3.json("/biplotdata", function(data) {
   
     var svgHeight = 340;
   
-    var height = 254;
+    var biplot_height = 254;
   
-    var width = 400;
+    var biplot_width = 400;
   
   
   
@@ -75,7 +75,7 @@ d3.json("/biplotdata", function(data) {
       console.log("y_axis_domain", y_axis_domain);
   
   
-      var x_scale = d3.scaleLinear().domain(x_axis_domain).range([0, width]);
+      var x_scale = d3.scaleLinear().domain(x_axis_domain).range([0, biplot_width]);
   
       var datamax = d3.sum(PCA1);
   
@@ -84,7 +84,7 @@ d3.json("/biplotdata", function(data) {
     var y_scale = d3
       .scaleLinear()
       .domain(y_axis_domain)
-      .range([height, 0]);
+      .range([biplot_height, 0]);
   
     var x_axis_bottom = d3.axisBottom().ticks(PCA1.length).scale(x_scale);
   
@@ -155,11 +155,11 @@ d3.json("/biplotdata", function(data) {
   
       var xAxis = barGraph
       .append("g")
-      .attr("transform", "translate(50,"+height+")")
+      .attr("transform", "translate(50,"+biplot_height+")")
       .call(x_axis_bottom)
       .append("text")
-      .attr("y", height - 50)
-        .attr("x", width - 50)
+      .attr("y", biplot_height - 50)
+        .attr("x", biplot_width - 50)
       .attr("text-anchor", "end")
       .attr("stroke", "black");
   
@@ -168,8 +168,8 @@ d3.json("/biplotdata", function(data) {
       .attr("transform", "translate(50,0)")
       .call(x_axis_bottom)
       .append("text")
-      .attr("y", height - 50)
-        .attr("x", width - 50)
+      .attr("y", biplot_height - 50)
+        .attr("x", biplot_width - 50)
       .attr("text-anchor", "end")
       .attr("stroke", "black");
   
@@ -204,7 +204,7 @@ d3.json("/biplotdata", function(data) {
     
       var yAxis = barGraph
       .append("g")
-      .attr("transform", "translate("+(width+50)+",0)")
+      .attr("transform", "translate("+(biplot_width+50)+",0)")
       .call(y_axis_left);
   
       barGraph.append("text").attr("transform", "rotate(-90)")
@@ -216,8 +216,8 @@ d3.json("/biplotdata", function(data) {
       .text("PCA2");
   
       barGraph.append("text")
-      .attr("y", height*105/100)
-      .attr("x",width)
+      .attr("y", biplot_height*105/100)
+      .attr("x",biplot_width)
         .attr("dy", "1em")
         .attr("font-weight","bold")
         .style("text-anchor", "end")
@@ -226,7 +226,7 @@ d3.json("/biplotdata", function(data) {
           function onMouseOver(d,i)
           {
               var x = barWidth * i + margin.left;
-              var y = (height - (height / y_length) * d) ;
+              var y = (biplot_height - (biplot_height / y_length) * d) ;
               barGraph.append("text").text(d).
                   attr("x", x)
                   .attr("y", y).
