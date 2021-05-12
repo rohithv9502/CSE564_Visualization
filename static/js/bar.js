@@ -3,38 +3,40 @@ var bar_div=d3.select("body")
 .attr("id","barchart")
 .attr("class","barchart")
 
-var svg=bar_div.append("svg")
+var bar_svg=bar_div.append("svg")
 .attr("id","barsvg")
 .attr("width",900)
 .attr("height",500)
 
-var margin=100;
-    width=svg.attr("width")-margin,
-    height=svg.attr("height")-margin;
-    console.log(width,height);
+var bar_margin=100;
+    bar_width=bar_svg.attr("width")-bar_margin,
+    bar_height=bar_svg.attr("height")-bar_margin;
+    console.log(bar_width,bar_height);
 
-// var pcp_div=d3.select("body")
-//     .append("div")
-//     .attr("id","pcp")
-//     .attr("class","pcp")
-    
-// var pcp_svg=pcp_div.append("svg")
-//     .attr("id","pcpsvg")
-//     .attr("width",1500)
-//     .attr("height",450)
-
-// var pcp_margin=100;
-//     pcp_width=pcp_svg.attr("width")-pcp_margin,
-//     pcp_height=pcp_svg.attr("height")-pcp_margin;
-//     console.log(pcp_width,pcp_height);
-
- var g=svg.append("g").attr("transform","translate(0,0)");
- //var pcp_g=pcp_svg.append("g").attr("transform","translate(0,0)");
-
- var xCatScale= d3.scaleBand().range([0,width-50]);
- var yLinearScale=d3.scaleLinear().range([height-100,50])
- barchart()
- function barchart(){
+var data=""
+var g=bar_svg.append("g").attr("transform","translate(0,0)");
+bar_chart(true,"");
+function bar_chart(is_full_data,state){
+    console.log("bar chart",is_full_data)
+    if(is_full_data){
+        data=statewise_accidents
+        bar_chart_data()
+    }
+    else{
+        console.log("state in bar",state)
+        d3.json('/countybar?'+"state_sym="+state, function(err,countywise_map){
+            data=countywise_map
+            bar_chart_data()
+        });
+    }
+}
+function bar_chart_data(){
+    g.remove();
+  g=bar_svg.append("g").attr("transform","translate(0,0)");
+ var xCatScale= d3.scaleBand().range([0,bar_width-50]);
+ var yLinearScale=d3.scaleLinear().range([bar_height-100,50])
+ 
+ 
     constructXY()
     plotCatXScale();
     plotLinearYScale()
@@ -52,18 +54,17 @@ var margin=100;
     .attr("x",xy => xCatScale(xy[0])+100+xCatScale.bandwidth()/8)
     .attr("y",xy => yLinearScale(xy[1]))
     .attr("width",3*xCatScale.bandwidth()/4)
-    .attr("height",d => height -100- yLinearScale(d[1]));
- }
+    .attr("height",d => bar_height -100- yLinearScale(d[1]));
 
  
 function constructXY(){
-    console.log(statewise_accidents)
-    x_keys=d3.map(statewise_accidents).keys();
+    console.log(data)
+    x_keys=d3.map(data).keys();
     console.log("x,y,",x_keys.length);
     xy=[]
-    console.log(statewise_accidents)
+    console.log(data)
     for(var i=0;i<x_keys.length;i++){
-        xy[i]=[x_keys[i],statewise_accidents[x_keys[i]]];
+        xy[i]=[x_keys[i],data[x_keys[i]]];
     }
     console.log(xy)
     
@@ -77,7 +78,7 @@ function plotCatXScale(){
     xCatScale.domain(xDomain);
     var xg=g.append("g")
     .attr("class","xtick")
-    .attr("transform","translate(100,"+ (height-100) +")");
+    .attr("transform","translate(100,"+ (bar_height-100) +")");
     xg.call(d3.axisBottom(xCatScale))
     .selectAll("text")
     .attr("y", -5)
@@ -91,8 +92,8 @@ function plotCatXScale(){
 
 function setXAxisLabel(){
     g.append("text")
-    .attr("x", 100+width/2)
-    .attr("y", height+50)
+    .attr("x", 100+bar_width/2)
+    .attr("y", bar_height+50)
     .attr("text-anchor", "start")
     .text("States")
     .attr("class","xlabel");
@@ -120,7 +121,7 @@ function setYAxisLabel(text){
     g.append("text")
     .attr("transform","rotate(-90)")
     .attr("x","-200")
-    .attr("y",height/4)
+    .attr("y",bar_height/4)
    
     .attr("dy", "-5.1em")     
          .attr("text-anchor", "end")
@@ -162,3 +163,4 @@ function getYOfbar(d){
     return yLinearScale(d[1])-10;
 }
 
+}
