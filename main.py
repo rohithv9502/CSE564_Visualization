@@ -24,11 +24,16 @@ def main_app():
 
 @app.route('/stateAccidentData', methods=["GET"])
 def state_accidents_data():
-    df = pd.read_csv('US_Accidents.csv')
-    accident_coordinates = df[['Start_Lat', 'Start_Lng', 'City', 'Severity']]
-    # print("Accidentd",accident_coordinates)
-    # print(json.dumps(accident_coordinates.to_dict(orient='records')))
+    df = pd.read_csv('US_Accidents_New.csv')
+    accident_coordinates = df[['Start_Lat', 'Start_Lng', 'City', 'Severity','State_Name']]
     return json.dumps(accident_coordinates.to_dict(orient='records'))
+
+
+def get_state_from_symbol(state):
+    f = open('states-symbols.json', )
+    data = json.load(f)
+    f.close()
+    return data[state]
 
 
 @app.route('/stateGeoStat', methods=['GET'])
@@ -69,10 +74,24 @@ def get_unfiltered_data():
     return data
 
 
+@app.route('/getbiplotforstate',methods=["GET"])
+def getbiplotforstate():
+    state_name=request.args.get('state')
+    df = pd.read_csv('US_Accidents_New.csv')
+    df = df[(df['State_Name'] == state_name)]
+    return PCA_data(df)
+
+
 @app.route("/biplotdata", methods=["GET"])
 def biplotdata():
     df = pd.read_csv('US_Accidents.csv')
-    df = df[['Temperature(F)', 'Wind_Chill(F)', 'Humidity(%)', 'Pressure(in)', 'Visibility(mi)', 'Wind_Speed(mph)',
+    return PCA_data(df)
+
+
+
+
+def PCA_data(df):
+    df = df[['Temperature(F)', 'Humidity(%)', 'Pressure(in)', 'Visibility(mi)', 'Wind_Speed(mph)',
              'Precipitation(in)']]
     x = df
     columns = df.columns.values[:]
