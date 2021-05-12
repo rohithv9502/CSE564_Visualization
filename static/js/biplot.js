@@ -29,7 +29,7 @@ d3.json("/biplotdata", function(data) {
   
     var svgHeight = 500;
   
-    var height = 400;
+    var height = 254;
   
     var width = 400;
   
@@ -57,7 +57,11 @@ d3.json("/biplotdata", function(data) {
     return parseFloat(d)*2});
   
     y_axis_domain[1] = d3.max(PCA2,d=>{
-    return parseFloat(d)})*2;
+        return parseFloat(d)
+    }) * 2;
+      
+      console.log("x_axis_domain", x_axis_bottom);
+      console.log("y_axis_domain", y_axis_domain);
   
   
       var x_scale = d3.scaleLinear().domain(x_axis_domain).range([0, width]);
@@ -140,7 +144,7 @@ d3.json("/biplotdata", function(data) {
   
       var xAxis = barGraph
       .append("g")
-      .attr("transform", "translate(50,400)")
+      .attr("transform", "translate(50,"+height+")")
       .call(x_axis_bottom)
       .append("text")
       .attr("y", height - 50)
@@ -189,7 +193,7 @@ d3.json("/biplotdata", function(data) {
     
       var yAxis = barGraph
       .append("g")
-      .attr("transform", "translate(850,0)")
+      .attr("transform", "translate("+(width+50)+",0)")
       .call(y_axis_left);
   
       barGraph.append("text").attr("transform", "rotate(-90)")
