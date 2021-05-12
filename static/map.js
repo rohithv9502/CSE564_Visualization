@@ -12,15 +12,15 @@ http://bl.ocks.org/mbostock/3888852  */
 
 		
 //Width and height of map
-var width = 760;
-var height = 500;
+var map_width = 760;
+var map_height = 500;
 
 
 
 
 // D3 Projection
 var projection = d3.geoAlbersUsa()
-				   .translate([width/2, height/2])    // translate to center of screen
+				   .translate([map_width/2, map_height/2])    // translate to center of screen
 				   .scale([1000]);          // scale things down so see entire US
         
 // Define path generator
@@ -41,8 +41,8 @@ var mapSvg = d3.select("body")
 	.append("div")
 	.attr("class","map")
 			.append("svg")
-			.attr("width", width)
-			.attr("height", height);
+			.attr("width", map_width)
+			.attr("height", map_height);
         
 // Append Div for tooltip to SVG
 var div = d3.select("body")
@@ -116,6 +116,7 @@ for (var i = 0; i < data.length; i++) {
 		  pcpplot(false,d.properties.name)
 		  filter_data(d.properties.name)
 		  get_biplot(d.properties.name)
+		  sunBurst(d.properties.symbol)
 	  })
 	  // fade out tooltip on mouse out               
 	  .on("mouseout", function (d) {

@@ -51,3 +51,11 @@ path:hover {
     left: 1000px;
     top: 40px;
   }
+
+
+  #sunburst svg {
+    position: absolute;
+    left: 1500px;
+    top: 600px;
+  }
+
