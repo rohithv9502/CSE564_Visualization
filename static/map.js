@@ -220,7 +220,7 @@ getStateAccidentData();
 
         
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
-var legend = d3.select("body").append("svg")
+var legend = mapSvg.append("g")
       			.attr("class", "legend")
      			.attr("width", 140)
     			.attr("height", 200)
@@ -228,7 +228,7 @@ var legend = d3.select("body").append("svg")
    				.data(color.domain().slice().reverse())
    				.enter()
    				.append("g")
-     			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+     			.attr("transform", function(d, i) { return "translate(680," + (350+i * 20) + ")"; });
 
   	legend.append("rect")
    		  .attr("width", 18)
