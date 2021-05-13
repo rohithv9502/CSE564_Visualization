@@ -123,8 +123,8 @@ console.log("data",db1);
        })
        .on('mousemove', function(d) {
          tooltip.style('position', 'absolute');
-         tooltip.style('top', (d3.event.layerY+600 + 10)+ 'px');
-         tooltip.style('left', (d3.event.layerX +1500+ 10)+ 'px');
+         tooltip.style('top', (d3.event.layerY+550 + 10)+ 'px');
+         tooltip.style('left', (d3.event.layerX +1550+ 10)+ 'px');
      })
      .transition()
       .duration(function(d, i) {
