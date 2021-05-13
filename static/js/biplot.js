@@ -126,7 +126,9 @@ d3.json("/biplotdata", function(data) {
       .selectAll(".biplot-labels")
       .data(data)
       .enter()
-      .append("text");
+      .append("text")
+      .transition()
+    .duration(1000);
     
  /*
       var points = barGraph
@@ -165,8 +167,7 @@ d3.json("/biplotdata", function(data) {
         .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+90; })
-        .attr("y", function (d) { return y_scale(d.y)+60; })
+        .attr("y", function (d) { return y_scale(d.y)+100; })
         .text(function (d) { return d.label;});
     
     
