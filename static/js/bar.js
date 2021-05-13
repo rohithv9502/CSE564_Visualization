@@ -1,13 +1,11 @@
-var bar_div=d3.select("body")
-.append("div")
+var bar_div=d3.select("#bar_div")
 .attr("id","barchart")
 .attr("class","barchart")
 
 var bar_svg=bar_div.append("svg")
 .attr("id","barsvg")
 .attr("width",900)
-.attr("height",500)
-.style("background-color","beige")
+.attr("height",500);
 
 var bar_margin=100;
     bar_width=bar_svg.attr("width")-bar_margin,

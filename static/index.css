@@ -86,10 +86,10 @@ path:hover {
     margin-left: 800px;
   }
 
-  #sunburst svg {
+  #sunburst_div svg {
     position: absolute;
-    left: 1500px;
-    top: 600px;
+    left: 1530px;
+    top: 550px;
   }
 
   text{

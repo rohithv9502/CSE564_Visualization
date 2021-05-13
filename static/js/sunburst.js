@@ -4,9 +4,23 @@ function sunBurst(stateSymbol)
 .await(drawsunburst);
 }
 
+var width = 300,
+       height =  340,
+       radius = (Math.min(width, height) / 2) ;
+       radius = radius - 30;
 
+var svvvg = d3.select("#sunburst_div").append("svg")
+   .attr("width", width)
+   .attr("height", height)
+  //  .attr("align","center")
+   .style("background-color","white");
+
+var sunburst_svg = svvvg
+     .append("g")
+       .attr("transform", "translate(" + width/2 + "," + (height+10)/3 + ")");
 
 function drawsunburst(error,db1){
+  sunburst_svg.select('g').remove()
 console.log("data",db1);
   var margin = {top: 115, right: 45, bottom: 30, left: 40};
   if (error) throw error;
@@ -15,12 +29,9 @@ console.log("data",db1);
   var root = db1;
   console.log("root",root);
 
-  d3.select("#sunburst svg").remove();
-  d3.select("#legend div").remove();
-   var width = 300,
-       height =  300,
-       radius = (Math.min(width, height) / 2) ;
-       radius = radius - 30;
+  // d3.select("#sunburst svg").remove();
+  // d3.select("#legend div").remove();
+   
    var color = d3.scaleOrdinal(d3.schemeBlues[3]);
 
    var legendRectSize = 15;
@@ -72,13 +83,9 @@ console.log("data",db1);
    })
 
 
-   var svvvg = d3.select("#sunburst").append("svg")
-   .attr("width", width)
-   .attr("height", height)
-   .attr("align","center")
-   .style("background-color","beige");
+   
 
-   var svg = svvvg
+   sunburst_svg = svvvg
      .append("g")
        .attr("transform", "translate(" + width/2 + "," + (height+10)/2 + ")");
 
@@ -93,7 +100,7 @@ console.log("data",db1);
 
     console.log("root",root);
 
-   var path = svg.selectAll("path")
+   var path = sunburst_svg.selectAll("path")
          .data(partition(root).descendants())
        .enter().append("path")
          .attr("d", arc)
@@ -191,7 +198,7 @@ console.log("data",db1);
    legendsun.append('span')
      .text(function(d) { return d.data.name; })
 
-   svg.append("text")
+     sunburst_svg.append("text")
       .attr("class", "total")
       .attr("text-anchor", "middle")
         .attr('font-size', '2em')
@@ -217,7 +224,7 @@ console.log("data",db1);
    function redraw(d) {
      console.log("function redraw");
 
-     svg.transition()
+     sunburst_svg.transition()
          .duration(750)
          .tween("scale", function() {
            var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
@@ -236,7 +243,7 @@ console.log("data",db1);
      console.log("function click");
      console.log("d.y0 = " + d.y0);
 
-     svg.transition()
+     sunburst_svg.transition()
          .duration(750)
          .tween("scale", function() {
            var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
