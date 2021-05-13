@@ -27,8 +27,8 @@ def main_app():
 
 @app.route('/stateAccidentData', methods=["GET"])
 def state_accidents_data():
-    df = pd.read_csv('US_Accidents_New.csv')
-    accident_coordinates = df[['Start_Lat', 'Start_Lng', 'City', 'Severity','State_Name']]
+    df = pd.read_csv('map_New.csv')
+    accident_coordinates = df[['Start_Lat', 'Start_Lng', 'County','State_Name','count']]
     return json.dumps(accident_coordinates.to_dict(orient='records'))
 
 
@@ -137,7 +137,7 @@ def getDataSun():
 
 
 def dfbystatesun(stateSymbol):
-    print("stateSymbol")
+    print("stateSymbol",stateSymbol)
     df = pd.read_csv("Sunburst_data.csv")
     print("Sunburst data",df)
     dfc1= df[df['State'] ==stateSymbol]

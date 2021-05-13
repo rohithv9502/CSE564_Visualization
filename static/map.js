@@ -188,9 +188,9 @@ function mapCities(data)
 		return projection([d.Start_Lng, d.Start_Lat])[1];
 	})
 	.attr("r", function(d) {
-		return 1;
+		return d.count/10000;
 	})
-		.style("fill", "rgb(255,0,0)")
+		.style("fill", "rgba(255,0,0)")
 		.style("opacity", 0.85)
 
 	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks"
@@ -199,7 +199,7 @@ function mapCities(data)
     	d3.select(".tooltip").transition()
       	   .duration(200)
            .style("opacity", .9);
-           div.text(d.City)
+           div.text(d.County+" "+d.count)
            .style("left", (d3.event.pageX) + "px")
            .style("top", (d3.event.pageY - 28) + "px");
 	})
