@@ -55,7 +55,7 @@ path:hover {
   }
 
   .reset_button {
-    background-color: #4CAF50; /* Green */
+    background-color: rgba(7, 122, 237,1); /* Green */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -71,4 +71,10 @@ path:hover {
     padding: 2px;
     margin-top: 450px;
     margin-left: 800px;
+  }
+
+  #sunburst svg {
+    position: absolute;
+    left: 1500px;
+    top: 600px;
   }

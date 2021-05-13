@@ -1,9 +1,9 @@
 .bar {
-    fill : #69b3a2
+    fill : rgba(7, 122, 237,0.4)
     }
     
 .redbar {
-    fill :red;
+    fill :rgba(7, 122, 237,1);
 }
 
 .background path {

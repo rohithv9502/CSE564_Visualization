@@ -12,15 +12,15 @@ http://bl.ocks.org/mbostock/3888852  */
 
 		
 //Width and height of map
-var width = 760;
-var height = 500;
+var map_width = 760;
+var map_height = 500;
 
 var reset_btn="";
 
 
 // D3 Projection
 var projection = d3.geoAlbersUsa()
-				   .translate([width/2, height/2])    // translate to center of screen
+				   .translate([map_width/2, map_height/2])    // translate to center of screen
 				   .scale([1000]);          // scale things down so see entire US
         
 // Define path generator
@@ -41,14 +41,16 @@ var mapSvg = d3.select("body")
 	.append("div")
 	.attr("class","map")
 			.append("svg")
-			.attr("width", width)
-			.attr("height", height);
+			.attr("width", map_width)
+			.attr("height", map_height)
+			.style("background-color","beige");
         
 // Append Div for tooltip to SVG
-var div = d3.select("body")
+var legend_div = d3.select("body")
 		    .append("div")   
-    		.attr("class", "tooltip")               
-    		.style("opacity", 0);
+    		.attr("class", "tooltip")
+			.style("fill","beige")               
+    		// .style("opacity", 0);
 
 var statesSymbols;
 
@@ -97,7 +99,7 @@ for (var i = 0; i < data.length; i++) {
 			d3.select(".tooltip").transition()
 		  .duration(200)
 				.style("opacity", .9);
-				div.text(d.properties.name)
+				legend_div.text(d.properties.name)
 				.style("left", (d3.event.pageX) + "px")
 				.style("top", (d3.event.pageY - 28) + "px");
 		})
@@ -106,7 +108,7 @@ for (var i = 0; i < data.length; i++) {
 		d3.select(".tooltip").transition()
 		  .duration(200)
 		  .style("opacity", .9);
-		div.text(d.properties.name)
+		  legend_div.text(d.properties.name)
 		  .style("left", (d3.event.pageX) + "px")
 		  .style("top", (d3.event.pageY - 28) + "px");
 	  })
@@ -116,6 +118,7 @@ for (var i = 0; i < data.length; i++) {
 		  pcpplot(false,d.properties.name)
 		  filter_data(d.properties.name)
 		  get_biplot(d.properties.name)
+		  sunBurst(d.properties.symbol)
 	  })
 	  // fade out tooltip on mouse out               
 	  .on("mouseout", function (d) {
@@ -198,7 +201,7 @@ function mapCities(data)
     	d3.select(".tooltip").transition()
       	   .duration(200)
            .style("opacity", .9);
-           div.text(d.City)
+           legend_div.text(d.City)
            .style("left", (d3.event.pageX) + "px")
            .style("top", (d3.event.pageY - 28) + "px");
 	})
