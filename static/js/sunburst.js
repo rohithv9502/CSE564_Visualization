@@ -17,6 +17,10 @@ function sunBurst(stateSymbol)
 .await(drawsunburst);
 }
 
+
+
+
+function drawsunburst(error,db1){
 var width = 300,
        height =  340,
        radius = (Math.min(width, height) / 2) ;
@@ -28,11 +32,12 @@ var svvvg = d3.select("#sunburst_div").append("svg")
   //  .attr("align","center")
    .style("background-color","white");
 
+
 var sunburst_svg = svvvg
      .append("g")
        .attr("transform", "translate(" + width/2 + "," + (height+10)/3 + ")");
 
-function drawsunburst(error,db1){
+
     console.log("data from backend",db1)
   //sunburst_svg.select('g').remove()
 console.log("data",db1);
@@ -228,7 +233,7 @@ console.log("data",db1);
 
    function redraw(d) {
      console.log("function redraw");
-
+    sunburst_svg.selectAll(".path").remove();
      sunburst_svg.transition()
          .duration(750)
          .tween("scale", function() {
