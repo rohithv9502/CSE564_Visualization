@@ -57,7 +57,8 @@ console.log("data",db1);
      .append('div').classed('sunburst-tooltip', true);
    tooltip.append('div')
      .attr('class', 'label')
-     .style('color','black');
+     .style('color','black')
+     .style('font-size','12px');
    tooltip.append('div')
      .attr('class', 'count');
    tooltip.append('div')
