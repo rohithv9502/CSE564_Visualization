@@ -1,3 +1,15 @@
+   var tooltip = d3.select('body')
+     .append('div').classed('sunburst-tooltip', true);
+   tooltip.append('div')
+     .attr('class', 'label')
+     .style('color','black')
+     .style('font-size','12px');
+   tooltip.append('div')
+     .attr('class', 'count');
+   tooltip.append('div')
+     .attr('class', 'percent');
+
+
 function sunBurst(stateSymbol)
 {
       d3.queue().defer(d3.json, "/getDataSun?stateSymbol="+stateSymbol)
@@ -51,18 +63,6 @@ console.log("data",db1);
        .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
        .innerRadius(function(d) { return Math.max(0, y(d.y0)); })
        .outerRadius(function(d) { return Math.max(0, y(d.y1)); });
-
-
-   var tooltip = d3.select('body')
-     .append('div').classed('sunburst-tooltip', true);
-   tooltip.append('div')
-     .attr('class', 'label')
-     .style('color','black')
-     .style('font-size','12px');
-   tooltip.append('div')
-     .attr('class', 'count');
-   tooltip.append('div')
-     .attr('class', 'percent');
 
 
    var root = d3.hierarchy(root);
