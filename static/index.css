@@ -88,6 +88,13 @@ path:hover {
 
   #sunburst_div svg {
     position: absolute;
-    left: 1530px;
+    left: 1600px;
     top: 550px;
   }
+
+  text{
+    font-family:"Verdana"
+  }
+
+
+

@@ -60,7 +60,7 @@ d3.json("/biplotdata", function(data) {
       .attr("class", "bi-plot")
       .attr("height", svgHeight)
       .attr("width", svgWidth)
-      .attr("transform", "translate(150,0)")
+      .attr("transform", "translate(200,0)")
       .style("background-color","white");
 
   
@@ -126,7 +126,9 @@ d3.json("/biplotdata", function(data) {
       .selectAll(".biplot-labels")
       .data(data)
       .enter()
-      .append("text");
+      .append("text")
+      .transition()
+    .duration(1000);
     
  /*
       var points = barGraph
@@ -144,7 +146,7 @@ d3.json("/biplotdata", function(data) {
       */
 
       //x-grid lines
-      // barGraph.append("g")			
+      // barGraph.append("g")
       //   .attr("class", "grid")
       //   .attr("transform","translate(100,"+ height +")")
       //   .call(d3.axisBottom(x_scale)
@@ -159,7 +161,7 @@ d3.json("/biplotdata", function(data) {
     //         .tickSize(-width)
     //         .tickFormat("")
     //     )
-  
+
       var xAxis = barGraph
       .append("g")
       .attr("transform", "translate(80,"+285+")")
@@ -219,11 +221,10 @@ d3.json("/biplotdata", function(data) {
         .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+90; })
-        .attr("y", function (d) { return y_scale(d.y)+60; })
+        .attr("y", function (d) { return y_scale(d.y)+100; })
         .text(function (d) { return d.label;});
-    
-    
+
+
     lines
       .style("stroke", function (d, i) { return color(i); })
       .style("stroke-width", 2)
@@ -231,7 +232,7 @@ d3.json("/biplotdata", function(data) {
       .attr("y1", y_scale(0)+30)
       .attr("x2", function (d) { return x_scale(d.x) + 80; })
       .attr("y2", function (d) { return y_scale(d.y)+30;});
-  
+
       barGraph.append("text").attr("transform", "rotate(-90)")
       .attr("y", 20)
       .attr("x",-svgHeight/2)
