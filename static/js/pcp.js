@@ -4,32 +4,22 @@ var pcp_margin = {top: 66, right: 110, bottom: 20, left: 70},
     pcp_width = 900 - pcp_margin.left - pcp_margin.right,
     pcp_height = 340 - pcp_margin.top - pcp_margin.bottom,
     innerHeight = pcp_height - 2;
-var container = d3.select("#pcp_div")
+var container = d3.select("body").append("div")
     .attr("class", "parcoords")
     .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
     .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
 
-
-var pcp_div=d3.select("#pcp_div");
-var pcp_svg = container.append("svg")
-    .attr("width", pcp_width + pcp_margin.left + pcp_margin.right)
-    .attr("height", pcp_height + pcp_margin.top + pcp_margin.bottom)
-    // .style("background-color","white");
-
-    var pcp_g = pcp_svg
-  .append("g")
-    .attr("transform", "translate(" + pcp_margin.left + "," + pcp_margin.top + ")");
 pcpplot(true,"")
 
 function pcpplot(is_full_data,state){
-    pcp_g.remove();
+    container.remove()
 
 var devicePixelRatio = window.devicePixelRatio || 1;
 
 var pcp_color = d3.scaleOrdinal(d3.schemeCategory20)
   .domain(["1", "2", "3", "4"])
-  //.range(["rgba(7, 122, 237,0.4)","rgba(7, 122, 237,0.60)","rgba(7, 122, 237,0.80)","rgba(7, 122, 237,1)"])
-  // .range(["#DB7F85", "#50AB84", "#4C6C86", "#C47DCB", "#B59248", "#DD6CA7", "#E15E5A", "#5DA5B3", "#725D82", "#54AF52", "#954D56", "#8C92E8", "#D8597D", "#AB9C27", "#D67D4B", "#D58323", "#BA89AD", "#357468", "#8F86C2", "#7D9E33", "#517C3F", "#9D5130", "#5E9ACF", "#776327", "#944F7E"]);
+  //.range(["#B59248", "#50AB84", "#725D82", "#E15E5A"])
+//   .range(["#DB7F85", "#50AB84", "#4C6C86", "#C47DCB", "#B59248", "#DD6CA7", "#E15E5A", "#5DA5B3", "#725D82", "#54AF52", "#954D56", "#8C92E8", "#D8597D", "#AB9C27", "#D67D4B", "#D58323", "#BA89AD", "#357468", "#8F86C2", "#7D9E33", "#517C3F", "#9D5130", "#5E9ACF", "#776327", "#944F7E"]);
 
 var types = {
   "Number": {
@@ -113,13 +103,15 @@ var xscale = d3.scalePoint()
 
 var yAxis = d3.axisLeft();
 
-console.log("inside",pcp_div)
-// container = pcp_div
-//     .attr("class", "parcoords")
-//     .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
-//     .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
+container = d3.select("body").append("div")
+    .attr("class", "parcoords")
+    .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
+    .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
 
-pcp_g = pcp_svg
+var pcp_svg = container.append("svg")
+    .attr("width", pcp_width + pcp_margin.left + pcp_margin.right)
+    .attr("height", pcp_height + pcp_margin.top + pcp_margin.bottom)
+    .style("background-color","white")
   .append("g")
     .attr("transform", "translate(" + pcp_margin.left + "," + pcp_margin.top + ")");
 
@@ -139,7 +131,7 @@ ctx.scale(devicePixelRatio, devicePixelRatio);
 
 //var output = d3.select("body").append("pre");
 
-var axes = pcp_g.selectAll(".axis")
+var axes = pcp_svg.selectAll(".axis")
     .data(dimensions)
   .enter().append("g")
     .attr("class", function(d) { return "axis " + d.key.replace(/ /g, "_"); })
@@ -169,8 +161,8 @@ d3.json("/get-full-data", function(error, data) {
       if (d[key] && d[key].length > 35) d[key] = d[key].slice(0,36);
     }
   });
-  
-  
+
+
 
   //type/dimension default setting happens here
   dimensions.forEach(function(dim) {
@@ -220,7 +212,7 @@ d3.json("/get-full-data", function(error, data) {
 
   d3.selectAll(".axis.Severity .tick text")
     .style("fill", pcp_color);
-    
+
   //output.text(d3.tsvFormat(data.slice(0,24)));
 
   function project(d) {
@@ -259,7 +251,7 @@ d3.json("/get-full-data", function(error, data) {
         }
         return;
       }
-      
+
       if (i == 0) {
         ctx.moveTo(p[0],p[1]);
         return;
@@ -279,7 +271,7 @@ d3.json("/get-full-data", function(error, data) {
     render.invalidate();
 
     var actives = [];
-    pcp_g.selectAll(".axis .brush")
+    pcp_svg.selectAll(".axis .brush")
       .filter(function(d) {
         return d3.brushSelection(this);
       })
