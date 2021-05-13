@@ -36,11 +36,11 @@ d3.json("/biplotdata", function(data) {
   //showBiPlot(PCA1, PCA2,columns,data_points);
   
   function showBiPlot(PCA1,PCA2,columns,data_points) {
-    d3.select("body").select(".bi-plot").remove("g");
+    d3.select("#biplot_div").selectAll("g").remove();
   
   
   
-    var margin = { left: 50, top: 100, bottom: 50, right: 50 };
+    var margin = { left: 50, top: 50, bottom: 50, right: 50 };
   
     var svgWidth = 550;
   
@@ -55,13 +55,13 @@ d3.json("/biplotdata", function(data) {
   
   
     var barGraph = d3
-      .select("body")
+      .select("#biplot_div")
       .append("svg")
       .attr("class", "bi-plot")
       .attr("height", svgHeight)
       .attr("width", svgWidth)
-      .attr("transform", "translate(150,50)")
-      .style("background-color","beige");
+      .attr("transform", "translate(150,0)")
+      .style("background-color","white");
 
   
     var x_axis_domain=[0,0];
@@ -143,15 +143,15 @@ d3.json("/biplotdata", function(data) {
 
       */
 
-    //   //x-grid lines
-    //   barGraph.append("g")			
-    //     .attr("class", "grid")
-    //     .attr("transform","translate(100,"+ height +")")
-    //     .call(d3.axisBottom(x_scale)
-    //         .tickSize(-height)
-    //         .tickFormat("")
-    //     )
-    // //y-gridlines
+      //x-grid lines
+      // barGraph.append("g")			
+      //   .attr("class", "grid")
+      //   .attr("transform","translate(100,"+ height +")")
+      //   .call(d3.axisBottom(x_scale)
+      //       .tickSize(-height)
+      //       .tickFormat("")
+      //   )
+    //y-gridlines
     // barGraph.append("g")			
     //     .attr("class", "grid")
     //     .attr("transform","translate(100,0)")
@@ -159,43 +159,23 @@ d3.json("/biplotdata", function(data) {
     //         .tickSize(-width)
     //         .tickFormat("")
     //     )
-    
-      labels
-      .style("stroke", function (d, i) { return color(i); })
-        .attr("x", function (d) { return x_scale(d.x)+10 ; })
-          .attr('text-anchor', 'middle')
-          .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+90; })
-        .attr("y", function (d) { return y_scale(d.y)+60; })
-        .text(function (d) { return d.label;});
-    
-    
-    lines
-      .style("stroke", function (d, i) { return color(i); })
-      .style("stroke-width", 2)
-      .attr("x1", x_scale(0)+50)
-      .attr("y1", y_scale(0))
-      .attr("x2", function (d) { return x_scale(d.x) + 50; })
-      .attr("y2", function (d) { return y_scale(d.y);});
-  
-  
   
       var xAxis = barGraph
       .append("g")
-      .attr("transform", "translate(50,"+biplot_height+")")
+      .attr("transform", "translate(80,"+285+")")
       .call(x_axis_bottom)
       .append("text")
-      .attr("y", biplot_height - 50)
-        .attr("x", biplot_width - 50)
+      // .attr("y", biplot_height )
+      //   .attr("x", biplot_width - 50)
       .attr("text-anchor", "end")
       .attr("stroke", "black");
   
       var xAxis = barGraph
       .append("g")
-      .attr("transform", "translate(50,0)")
+      .attr("transform", "translate(80,30)")
       .call(x_axis_bottom)
       .append("text")
-      .attr("y", biplot_height - 50)
+      .attr("y", biplot_height - 30)
         .attr("x", biplot_width - 50)
       .attr("text-anchor", "end")
       .attr("stroke", "black");
@@ -226,25 +206,43 @@ d3.json("/biplotdata", function(data) {
   
     var yAxis = barGraph
       .append("g")
-      .attr("transform", "translate(50,0)")
+      .attr("transform", "translate(80,30)")
       .call(y_axis_left);
     
       var yAxis = barGraph
       .append("g")
-      .attr("transform", "translate("+(biplot_width+50)+",0)")
+      .attr("transform", "translate("+(biplot_width+80)+",30)")
       .call(y_axis_left);
+
+      labels
+      .style("stroke", function (d, i) { return color(i); })
+        .attr("x", function (d) { return x_scale(d.x)+10 ; })
+          .attr('text-anchor', 'middle')
+          .attr("class","biplot-labels")
+        .attr("y", function (d) { return y_scale(d.y)+90; })
+        .attr("y", function (d) { return y_scale(d.y)+60; })
+        .text(function (d) { return d.label;});
+    
+    
+    lines
+      .style("stroke", function (d, i) { return color(i); })
+      .style("stroke-width", 2)
+      .attr("x1", x_scale(0)+80)
+      .attr("y1", y_scale(0)+30)
+      .attr("x2", function (d) { return x_scale(d.x) + 80; })
+      .attr("y2", function (d) { return y_scale(d.y)+30;});
   
       barGraph.append("text").attr("transform", "rotate(-90)")
-      .attr("y", 0)
-      .attr("x",0)
+      .attr("y", 20)
+      .attr("x",-svgHeight/2)
       .attr("dy", "1em")
       .attr("font-weight","bold")
         .style("text-anchor", "end")
       .text("PCA2");
   
       barGraph.append("text")
-      .attr("y", biplot_height*105/100)
-      .attr("x",biplot_width)
+      .attr("y", 285+20)
+      .attr("x",70+biplot_width/2)
         .attr("dy", "1em")
         .attr("font-weight","bold")
         .style("text-anchor", "end")

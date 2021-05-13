@@ -4,15 +4,25 @@ var pcp_margin = {top: 66, right: 110, bottom: 20, left: 70},
     pcp_width = 900 - pcp_margin.left - pcp_margin.right,
     pcp_height = 340 - pcp_margin.top - pcp_margin.bottom,
     innerHeight = pcp_height - 2;
-var container = d3.select("body").append("div")
+var container = d3.select("#pcp_div")
     .attr("class", "parcoords")
     .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
     .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
 
+
+var pcp_div=d3.select("#pcp_div");
+var pcp_svg = container.append("svg")
+    .attr("width", pcp_width + pcp_margin.left + pcp_margin.right)
+    .attr("height", pcp_height + pcp_margin.top + pcp_margin.bottom)
+    // .style("background-color","white");
+
+    var pcp_g = pcp_svg
+  .append("g")
+    .attr("transform", "translate(" + pcp_margin.left + "," + pcp_margin.top + ")");
 pcpplot(true,"")
 
 function pcpplot(is_full_data,state){
-    container.remove()
+    pcp_g.remove();
 
 var devicePixelRatio = window.devicePixelRatio || 1;
 
@@ -103,15 +113,13 @@ var xscale = d3.scalePoint()
 
 var yAxis = d3.axisLeft();
 
-container = d3.select("body").append("div")
-    .attr("class", "parcoords")
-    .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
-    .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
+console.log("inside",pcp_div)
+// container = pcp_div
+//     .attr("class", "parcoords")
+//     .style("width", pcp_width + pcp_margin.left + pcp_margin.right + "px")
+//     .style("height", pcp_height + pcp_margin.top + pcp_margin.bottom + "px");
 
-var pcp_svg = container.append("svg")
-    .attr("width", pcp_width + pcp_margin.left + pcp_margin.right)
-    .attr("height", pcp_height + pcp_margin.top + pcp_margin.bottom)
-    .style("background-color","beige")
+pcp_g = pcp_svg
   .append("g")
     .attr("transform", "translate(" + pcp_margin.left + "," + pcp_margin.top + ")");
 
@@ -131,7 +139,7 @@ ctx.scale(devicePixelRatio, devicePixelRatio);
 
 //var output = d3.select("body").append("pre");
 
-var axes = pcp_svg.selectAll(".axis")
+var axes = pcp_g.selectAll(".axis")
     .data(dimensions)
   .enter().append("g")
     .attr("class", function(d) { return "axis " + d.key.replace(/ /g, "_"); })
@@ -271,7 +279,7 @@ d3.json("/get-full-data", function(error, data) {
     render.invalidate();
 
     var actives = [];
-    pcp_svg.selectAll(".axis .brush")
+    pcp_g.selectAll(".axis .brush")
       .filter(function(d) {
         return d3.brushSelection(this);
       })

@@ -37,19 +37,18 @@ var legendText = ["High", "Medium", "Low", "None"];
 //legendText=legendText.reverse()
 
 //Create SVG element and append map to the SVG
-var mapSvg = d3.select("body")
-	.append("div")
+var mapSvg = d3.select("#map_div")
 	.attr("class","map")
 			.append("svg")
 			.attr("width", map_width)
 			.attr("height", map_height)
-			.style("background-color","beige");
+			.attr("margin-top",100)
+			.style("background-color","white");
         
 // Append Div for tooltip to SVG
-var legend_div = d3.select("body")
-		    .append("div")   
+var legend_div = d3.select("#map_legend")
     		.attr("class", "tooltip")
-			.style("fill","beige")               
+			.style("fill","white")               
     		// .style("opacity", 0);
 
 var statesSymbols;

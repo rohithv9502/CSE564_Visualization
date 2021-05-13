@@ -40,12 +40,69 @@
 
 </head>
 
-  <body style="background-color:aliceblue">
+  <body style="background-color:beige">
 
-  <h1 style="text-align: center;">US Road Accidents</h1>
+  <!-- <h1 style="text-align: center;background-color:forestgreen">US Road Accidents</h1> -->
+
+  <main>
+
+    <div class="container" style="width: 100% !important;">
+        
+      <div class="row">
+            
+        <div class="col l12 s12">
+              <h4 style="text-align: center;background-color: white;">US ROAD ACCIDENTS</h4>
+        </div>
+
+      </div> 
+
+      <div class="row">
+        <div class="col l3 s3">
+          <div class="card-panel" style="background-color: #201a1657;">
+            <div id="map_div" ></div>
+            <div id="map_legend"></div>
+          </div>
+          
+        </div>
+        
+        <div class="col l6 s6">
+          <div class="card-panel" style="background-color: #201a1657; ">
+            <div id="bar_div" style="background-color: white;"></div>
+          
+          </div>
+          
+        </div>
+        
+      </div>
+      <div class="row">
+
+        <div class="col l3 s3">
+          <div class="card-panel" style="background-color: #201a1657;">
+            <div id="pcp_div" style="background-color: white;"></div>
+          </div>
+        </div>
+
+        <div class="col l6 s6">
+          <div class="card-panel" style="background-color: #201a1657;">
+            <div id="biplot_div" style="background-color: white;"></div>
+          </div>
+        </div>
+
+          <div class="col l6 s6">
+            <div class="card-panel" style="background-color: #201a1657; ">
+              <div id="sunburst_div"></div>
+            </div>
+          </div>
+
+      </div>
 
     
-    <script src='https://d3js.org/d3.v4.min.js'></script>
+    </div>
+
+
+  </main>
+    
+
     <script src="{{url_for('static', filename='/js/biplot.js')}}"></script>
 
      <script>
@@ -55,7 +112,10 @@
   <script src="{{url_for('static', filename='/js/pcp.js')}}"></script>
   <script src="{{url_for('static', filename='map.js')}}"></script>
   <script src="{{url_for('static', filename='/js/sunburst.js')}}"></script>
-   <div id="sunburst"></div>
+   <!-- <div id="sunburst"></div> -->
+
+
+   
 
   </body>
 
