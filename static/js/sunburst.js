@@ -32,7 +32,8 @@ var sunburst_svg = svvvg
        .attr("transform", "translate(" + width/2 + "," + (height+10)/3 + ")");
 
 function drawsunburst(error,db1){
-  sunburst_svg.select('g').remove()
+    console.log("data from backend",db1)
+  //sunburst_svg.select('g').remove()
 console.log("data",db1);
   var margin = {top: 115, right: 45, bottom: 30, left: 40};
   if (error) throw error;
@@ -41,8 +42,10 @@ console.log("data",db1);
   var root = db1;
   console.log("root",root);
 
-  // d3.select("#sunburst svg").remove();
-  // d3.select("#legend div").remove();
+   d3.select("#sunburst svg").remove();
+   d3.select("#legend div").remove();
+   d3.select(".total").remove();
+   d3.select(".path").remove();
    
    var color = d3.scaleOrdinal(d3.schemeBlues[3]);
 
@@ -83,7 +86,7 @@ console.log("data",db1);
    })
 
 
-   
+
 
    sunburst_svg = svvvg
      .append("g")
@@ -108,6 +111,7 @@ console.log("data",db1);
          .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); })
        .on("click", click)
        .on('mouseover', function(d) {
+       console.log("data from mouseover",d);
          var total = d.parent.value;
          var percent = Math.round(1000 * d.value / total) / 10;
          console.log("label",d.data.name);
