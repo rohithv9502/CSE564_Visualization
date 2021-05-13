@@ -10,6 +10,14 @@ function get_biplot(stateName)
     });
 }
 
+function biplot(){
+  d3.json("/biplotdata", function(data) {
+    console.log(data);
+    showBiPlot(data.PCA1,data.PCA2,data.columns,data.datapoints)
+  
+  });
+}
+
 
 d3.json("/biplotdata", function(data) {
     console.log(data);
@@ -133,15 +141,32 @@ d3.json("/biplotdata", function(data) {
       .style("fill", "darkblue");
 
       */
+
+    //   //x-grid lines
+    //   barGraph.append("g")			
+    //     .attr("class", "grid")
+    //     .attr("transform","translate(100,"+ height +")")
+    //     .call(d3.axisBottom(x_scale)
+    //         .tickSize(-height)
+    //         .tickFormat("")
+    //     )
+    // //y-gridlines
+    // barGraph.append("g")			
+    //     .attr("class", "grid")
+    //     .attr("transform","translate(100,0)")
+    //     .call(d3.axisLeft(y_scale).ticks(5)
+    //         .tickSize(-width)
+    //         .tickFormat("")
+    //     )
     
       labels
       .style("stroke", function (d, i) { return color(i); })
         .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+90; }).
-        .attr("y", function (d) { return y_scale(d.y)+60; }).
-        text(function (d) { return d.label;});
+        .attr("y", function (d) { return y_scale(d.y)+90; })
+        .attr("y", function (d) { return y_scale(d.y)+60; })
+        .text(function (d) { return d.label;});
     
     
     lines

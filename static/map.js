@@ -15,7 +15,7 @@ http://bl.ocks.org/mbostock/3888852  */
 var width = 760;
 var height = 500;
 
-
+var reset_btn="";
 
 
 // D3 Projection
@@ -238,6 +238,19 @@ var legend = d3.select("body").append("svg")
       	  .attr("y", 9)
       	  .attr("dy", ".35em")
       	  .text(function(d) { return d; });
+
+			// <button class="button">Button</button>
+			reset_btn=d3.select("body")
+		    .append("div").append("input")
+			.attr("type","button")
+			.attr("class","reset_button")
+			.attr("value","Reset to state view")
+			.on('click',function(d){
+				bar_chart(true,"")
+		  		pcpplot(true,"")
+		  		getStateAccidentData()
+		  		biplot()
+			})
 	});
 
 });

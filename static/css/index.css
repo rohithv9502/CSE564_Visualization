@@ -34,17 +34,25 @@
 }
 
 .xtick {
+  color: #ffffff;
     font-size: 12px;
 }
 
 .ytick {
+  color: #ffffff;
 font-size: 16px;
 }
 
 .xlabel {
-font-size: 16px;
+  color: #ffffff;
+  font-size: 16px;
+
 }
 
 .ylabel {
 font-size: 16px;
+color: #ffffff;
 }
+
+
+
