@@ -32,7 +32,7 @@ var path = d3.geoPath()               // path generator that will convert GeoJSO
 var color = d3.scaleLinear()
 			  .range(["rgba(7, 122, 237,0.4)","rgba(7, 122, 237,0.60)","rgba(7, 122, 237,0.80)","rgba(7, 122, 237,1)"]);
 
-var legendText = ["High", "Medium", "Low", "None"];
+var legendText = [">100K", ">10K", ">1K", ">100"];
 
 //legendText=legendText.reverse()
 
@@ -108,9 +108,9 @@ for (var i = 0; i < data.length; i++) {
 		d3.select(".tooltip").transition()
 		  .duration(200)
 		  .style("opacity", .9);
-		  legend_div.text(d.properties.name)
-		  .style("left", (d3.event.pageX) + "px")
-		  .style("top", (d3.event.pageY - 28) + "px");
+		  legend_div.text(d.properties.name+" "+d.properties.accidents)
+		  .style("left", (d3.event.pageX+40) + "px")
+		  .style("top", (d3.event.pageY - 18) + "px");
 	  })
 	  .on("click",function(d){
 		  console.log(d.properties.name)
@@ -131,21 +131,21 @@ for (var i = 0; i < data.length; i++) {
 	// Get data value
 		var value = d.properties.accidents;
 
-	if (value>100) {
+	if (value>100000) {
 	//If value exists…
 	return color(3);
 	}
-	if (value>10) {
+	if (value>10000) {
 		//If value exists…
 		return color(2);
 	}
-	if (value>1) {
+	if (value>1000) {
 		//If value exists…
 		return color(1);
 	}
 	if (value>100) {
 		//If value exists…
-		return color(1);
+		return color(0);
 		}else {
 	//If value is undefined…
 	return "rgba(7, 122, 237,0.20)";

@@ -50,7 +50,7 @@ def get_geo_data():
 
 @app.route('/states', methods=['GET'])
 def get_states():
-    df = pd.read_csv('US_Accidents.csv')
+    df = pd.read_csv('grouped.csv')
     x = df.iloc[0:, :].values
     accidents = df.to_dict(orient='records')
     # print("Accidents",accidents)
@@ -63,9 +63,9 @@ def get_states():
         state = data[row['State']]
         if (state in states_dict):
             count = states_dict[state]
-            states_dict[state] = count + 1
+            states_dict[state] = count + row['count']
         else:
-            states_dict[state] = 1
+            states_dict[state] = row['count']
             states_dict[state+"_sym"] = state_sym
     return jsonify(states_dict)
 
