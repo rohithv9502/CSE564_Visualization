@@ -106,7 +106,7 @@ d3.json("/biplotdata", function(data) {
   
     var data = [];
   
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
   
     for (i = 0; i < PCA1.length; i++)
     {

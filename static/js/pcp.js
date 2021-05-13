@@ -16,7 +16,7 @@ function pcpplot(is_full_data,state){
 
 var devicePixelRatio = window.devicePixelRatio || 1;
 
-var pcp_color = d3.scaleOrdinal(d3.schemeCategory20)
+var pcp_color = d3.scaleOrdinal(d3.schemeCategory10)
   .domain(["1", "2", "3", "4"])
   //.range(["#B59248", "#50AB84", "#725D82", "#E15E5A"])
 //   .range(["#DB7F85", "#50AB84", "#4C6C86", "#C47DCB", "#B59248", "#DD6CA7", "#E15E5A", "#5DA5B3", "#725D82", "#54AF52", "#954D56", "#8C92E8", "#D8597D", "#AB9C27", "#D67D4B", "#D58323", "#BA89AD", "#357468", "#8F86C2", "#7D9E33", "#517C3F", "#9D5130", "#5E9ACF", "#776327", "#944F7E"]);
