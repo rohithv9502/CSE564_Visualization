@@ -253,6 +253,7 @@ var legend = d3.select("body").append("svg")
 		  		pcpplot(true,"")
 		  		getStateAccidentData()
 		  		biplot()
+		  		displayCountrySunBurst()
 			})
 	});
 
