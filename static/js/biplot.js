@@ -60,7 +60,7 @@ d3.json("/biplotdata", function(data) {
       .attr("class", "bi-plot")
       .attr("height", svgHeight)
       .attr("width", svgWidth)
-      .attr("transform", "translate(150,0)")
+      .attr("transform", "translate(200,0)")
       .style("background-color","white");
 
   
@@ -221,8 +221,7 @@ d3.json("/biplotdata", function(data) {
         .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
           .attr("class","biplot-labels")
-        .attr("y", function (d) { return y_scale(d.y)+90; })
-        .attr("y", function (d) { return y_scale(d.y)+60; })
+        .attr("y", function (d) { return y_scale(d.y)+100; })
         .text(function (d) { return d.label;});
 
 
