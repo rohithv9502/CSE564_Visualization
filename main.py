@@ -27,8 +27,8 @@ def main_app():
 
 @app.route('/stateAccidentData', methods=["GET"])
 def state_accidents_data():
-    df = pd.read_csv('US_Accidents_New.csv')
-    accident_coordinates = df[['Start_Lat', 'Start_Lng', 'City', 'Severity','State_Name']]
+    df = pd.read_csv('map_New.csv')
+    accident_coordinates = df[['Start_Lat', 'Start_Lng', 'County','State_Name','count']]
     return json.dumps(accident_coordinates.to_dict(orient='records'))
 
 
@@ -50,7 +50,7 @@ def get_geo_data():
 
 @app.route('/states', methods=['GET'])
 def get_states():
-    df = pd.read_csv('US_Accidents.csv')
+    df = pd.read_csv('grouped.csv')
     x = df.iloc[0:, :].values
     accidents = df.to_dict(orient='records')
     # print("Accidents",accidents)
@@ -63,9 +63,9 @@ def get_states():
         state = data[row['State']]
         if (state in states_dict):
             count = states_dict[state]
-            states_dict[state] = count + 1
+            states_dict[state] = count + row['count']
         else:
-            states_dict[state] = 1
+            states_dict[state] = row['count']
             states_dict[state+"_sym"] = state_sym
     return jsonify(states_dict)
 
@@ -137,7 +137,7 @@ def getDataSun():
 
 
 def dfbystatesun(stateSymbol):
-    print("stateSymbol")
+    print("stateSymbol",stateSymbol)
     df = pd.read_csv("Sunburst_data.csv")
     print("Sunburst data",df)
     dfc1= df[df['State'] ==stateSymbol]

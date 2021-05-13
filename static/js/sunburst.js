@@ -43,9 +43,10 @@ console.log("data",db1);
 
 
    var tooltip = d3.select('body')
-     .append('div').classed('tooltip', true);
+     .append('div').classed('sunburst-tooltip', true);
    tooltip.append('div')
-     .attr('class', 'label');
+     .attr('class', 'label')
+     .style('color','black');
    tooltip.append('div')
      .attr('class', 'count');
    tooltip.append('div')
@@ -89,6 +90,7 @@ console.log("data",db1);
        //.style("text-decoration", "underline")
        .text("Total accidents");
 
+    console.log("root",root);
 
    var path = svg.selectAll("path")
          .data(partition(root).descendants())
@@ -100,6 +102,9 @@ console.log("data",db1);
        .on('mouseover', function(d) {
          var total = d.parent.value;
          var percent = Math.round(1000 * d.value / total) / 10;
+         console.log("label",d.data.name);
+         console.log("value",d.value);
+         console.log("percent",d.percent);
          tooltip.select('.label').html(d.data.name);
          tooltip.select('.count').html(d.value);
          tooltip.select('.percent').html(percent + '%');
@@ -109,8 +114,9 @@ console.log("data",db1);
          tooltip.style('display', 'none');
        })
        .on('mousemove', function(d) {
-         tooltip.style('top', (d3.event.layerY + 10) + 'px');
-         tooltip.style('left', (d3.event.layerX + 10) + 'px');
+         tooltip.style('position', 'absolute');
+         tooltip.style('top', (d3.event.layerY+600 + 10)+ 'px');
+         tooltip.style('left', (d3.event.layerX +1500+ 10)+ 'px');
      })
      .transition()
       .duration(function(d, i) {
@@ -250,5 +256,10 @@ console.log("data",db1);
 
   }
 
-  d3.queue().defer(d3.json, "/getDataSun?stateSymbol=All")
+function displayCountrySunBurst()
+{
+ d3.queue().defer(d3.json, "/getDataSun?stateSymbol=All")
 .await(drawsunburst);
+}
+
+displayCountrySunBurst();
