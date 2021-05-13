@@ -9,6 +9,7 @@
    tooltip.append('div')
      .attr('class', 'percent');
 
+tooltip.style('display', 'none');
 
 function sunBurst(stateSymbol)
 {
