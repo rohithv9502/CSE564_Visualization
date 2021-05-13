@@ -15,7 +15,7 @@ http://bl.ocks.org/mbostock/3888852  */
 var map_width = 760;
 var map_height = 500;
 
-
+var reset_btn="";
 
 
 // D3 Projection
@@ -42,13 +42,15 @@ var mapSvg = d3.select("body")
 	.attr("class","map")
 			.append("svg")
 			.attr("width", map_width)
-			.attr("height", map_height);
+			.attr("height", map_height)
+			.style("background-color","beige");
         
 // Append Div for tooltip to SVG
-var div = d3.select("body")
+var legend_div = d3.select("body")
 		    .append("div")   
-    		.attr("class", "tooltip")               
-    		.style("opacity", 0);
+    		.attr("class", "tooltip")
+			.style("fill","beige")
+    		// .style("opacity", 0);
 
 var statesSymbols;
 
@@ -97,7 +99,7 @@ for (var i = 0; i < data.length; i++) {
 			d3.select(".tooltip").transition()
 		  .duration(200)
 				.style("opacity", .9);
-				div.text(d.properties.name)
+				legend_div.text(d.properties.name)
 				.style("left", (d3.event.pageX) + "px")
 				.style("top", (d3.event.pageY - 28) + "px");
 		})
@@ -106,7 +108,7 @@ for (var i = 0; i < data.length; i++) {
 		d3.select(".tooltip").transition()
 		  .duration(200)
 		  .style("opacity", .9);
-		div.text(d.properties.name)
+		  legend_div.text(d.properties.name)
 		  .style("left", (d3.event.pageX) + "px")
 		  .style("top", (d3.event.pageY - 28) + "px");
 	  })
@@ -190,7 +192,7 @@ function mapCities(data)
 	.attr("r", function(d) {
 		return d.count/10000;
 	})
-		.style("fill", "rgba(255,0,0)")
+		.style("fill", "rgb(255,0,0)")
 		.style("opacity", 0.85)
 
 	// Modification of custom tooltip code provided by Malcolm Maclean, "D3 Tips and Tricks"
@@ -199,7 +201,7 @@ function mapCities(data)
     	d3.select(".tooltip").transition()
       	   .duration(200)
            .style("opacity", .9);
-           div.text(d.County+" "+d.count)
+           legend_div.text(d.County+" "+d.count)
            .style("left", (d3.event.pageX) + "px")
            .style("top", (d3.event.pageY - 28) + "px");
 	})
@@ -239,6 +241,19 @@ var legend = d3.select("body").append("svg")
       	  .attr("y", 9)
       	  .attr("dy", ".35em")
       	  .text(function(d) { return d; });
+
+			// <button class="button">Button</button>
+			reset_btn=d3.select("body")
+		    .append("div").append("input")
+			.attr("type","button")
+			.attr("class","reset_button")
+			.attr("value","Reset to state view")
+			.on('click',function(d){
+				bar_chart(true,"")
+		  		pcpplot(true,"")
+		  		getStateAccidentData()
+		  		biplot()
+			})
 	});
 
 });

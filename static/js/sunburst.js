@@ -73,7 +73,8 @@ console.log("data",db1);
    var svvvg = d3.select("#sunburst").append("svg")
    .attr("width", width)
    .attr("height", height)
-   .attr("align","center");
+   .attr("align","center")
+   .style("background-color","beige");
 
    var svg = svvvg
      .append("g")

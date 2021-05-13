@@ -18,8 +18,8 @@ var devicePixelRatio = window.devicePixelRatio || 1;
 
 var pcp_color = d3.scaleOrdinal(d3.schemeCategory20)
   .domain(["1", "2", "3", "4"])
-  //.range(["#B59248", "#50AB84", "#725D82", "#E15E5A"])
-//   .range(["#DB7F85", "#50AB84", "#4C6C86", "#C47DCB", "#B59248", "#DD6CA7", "#E15E5A", "#5DA5B3", "#725D82", "#54AF52", "#954D56", "#8C92E8", "#D8597D", "#AB9C27", "#D67D4B", "#D58323", "#BA89AD", "#357468", "#8F86C2", "#7D9E33", "#517C3F", "#9D5130", "#5E9ACF", "#776327", "#944F7E"]);
+  //.range(["rgba(7, 122, 237,0.4)","rgba(7, 122, 237,0.60)","rgba(7, 122, 237,0.80)","rgba(7, 122, 237,1)"])
+  // .range(["#DB7F85", "#50AB84", "#4C6C86", "#C47DCB", "#B59248", "#DD6CA7", "#E15E5A", "#5DA5B3", "#725D82", "#54AF52", "#954D56", "#8C92E8", "#D8597D", "#AB9C27", "#D67D4B", "#D58323", "#BA89AD", "#357468", "#8F86C2", "#7D9E33", "#517C3F", "#9D5130", "#5E9ACF", "#776327", "#944F7E"]);
 
 var types = {
   "Number": {
@@ -111,6 +111,7 @@ container = d3.select("body").append("div")
 var pcp_svg = container.append("svg")
     .attr("width", pcp_width + pcp_margin.left + pcp_margin.right)
     .attr("height", pcp_height + pcp_margin.top + pcp_margin.bottom)
+    .style("background-color","beige")
   .append("g")
     .attr("transform", "translate(" + pcp_margin.left + "," + pcp_margin.top + ")");
 

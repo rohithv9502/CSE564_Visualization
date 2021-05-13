@@ -19,6 +19,8 @@ path:hover {
   /* Legend Font Style */
   body {
     font: 11px sans-serif;
+    /* background-color: #101010; */
+    /* color: #ffffff; */
   }
 
   /* Legend Position Style */
@@ -52,10 +54,27 @@ path:hover {
     top: 40px;
   }
 
+  .reset_button {
+    background-color: rgba(7, 122, 237,1); /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 28px;
+    padding: 2px;
+    margin-top: 450px;
+    margin-left: 800px;
+  }
 
   #sunburst svg {
     position: absolute;
     left: 1500px;
     top: 600px;
   }
-
