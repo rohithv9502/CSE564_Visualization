@@ -111,7 +111,7 @@ container = d3.select("body").append("div")
 var pcp_svg = container.append("svg")
     .attr("width", pcp_width + pcp_margin.left + pcp_margin.right)
     .attr("height", pcp_height + pcp_margin.top + pcp_margin.bottom)
-    .style("background-color","white")
+    .style("background-color","black")
   .append("g")
     .attr("transform", "translate(" + pcp_margin.left + "," + pcp_margin.top + ")");
 
@@ -144,7 +144,7 @@ d3.json("/get-full-data", function(error, data) {
         pcp_full_data=data
     }
     else{
-        console.log(data[0].State,data[0].State=='ND',state)
+        //console.log(data[0].State,data[0].State=='ND',state)
         data = data.filter( function(d) {
             return d.State==state;
           } );
@@ -188,12 +188,15 @@ d3.json("/get-full-data", function(error, data) {
         var renderAxis = "axis" in d
           ? d.axis.scale(d.scale)  // custom axis
           : yAxis.scale(d.scale);  // default axis
-        d3.select(this).call(renderAxis);
+        d3.select(this).call(renderAxis).selectAll("text")
+        .style("fill","white");
       })
     .append("text")
+    .style("fill","white")
       .attr("class", "title")
       .attr("text-anchor", "start")
-      .text(function(d) { return "description" in d ? d.description : d.key; });
+      .text(function(d) { return "description" in d ? d.description : d.key; })
+      
 
   // Add and store a brush for each axis.
   axes.append("g")

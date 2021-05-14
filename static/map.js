@@ -30,7 +30,7 @@ var path = d3.geoPath()               // path generator that will convert GeoJSO
 		
 // Define linear scale for output
 var color = d3.scaleLinear()
-			  .range(["rgba(7, 122, 237,0.4)","rgba(7, 122, 237,0.60)","rgba(7, 122, 237,0.80)","rgba(7, 122, 237,1)"]);
+			  .range(["rgba(7, 122, 237,1)","rgba(7, 122, 237,0.8)","rgba(7, 122, 237,0.60)","rgba(7, 122, 237,0.4)"]);
 
 var legendText = [">100K", ">10K", ">1K", ">100"];
 
@@ -43,7 +43,7 @@ var mapSvg = d3.select("#map_div")
 			.attr("width", map_width)
 			.attr("height", map_height)
 			.attr("margin-top",100)
-			.style("background-color","white");
+			.style("background-color","black");
         
 // Append Div for tooltip to SVG
 var legend_div = d3.select("#map_legend")
@@ -99,6 +99,7 @@ for (var i = 0; i < data.length; i++) {
 		  .duration(200)
 				.style("opacity", .9);
 				legend_div.text(d.properties.name)
+				.style("fill","white")
 				.style("left", (d3.event.pageX) + "px")
 				.style("top", (d3.event.pageY - 28) + "px");
 		})
@@ -108,6 +109,7 @@ for (var i = 0; i < data.length; i++) {
 		  .duration(200)
 		  .style("opacity", .9);
 		  legend_div.text(d.properties.name+" "+d.properties.accidents)
+		  .style("fill","white")
 		  .style("left", (d3.event.pageX+40) + "px")
 		  .style("top", (d3.event.pageY - 18) + "px");
 	  })
@@ -201,6 +203,7 @@ function mapCities(data)
       	   .duration(200)
            .style("opacity", .9);
            legend_div.text(d.County+" "+d.count)
+		   .style("fill","white")
            .style("left", (d3.event.pageX) + "px")
            .style("top", (d3.event.pageY - 28) + "px");
 	})
@@ -235,10 +238,12 @@ var legend = mapSvg.append("g")
    		  .style("fill", color);
 
   	legend.append("text")
-  		  .data(legendText)
+  	.style("fill","white")	  
+	  .data(legendText)
       	  .attr("x", 24)
       	  .attr("y", 9)
       	  .attr("dy", ".35em")
+			
       	  .text(function(d) { return d; });
 
 			// <button class="button">Button</button>

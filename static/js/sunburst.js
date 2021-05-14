@@ -30,7 +30,7 @@ var svvvg = d3.select("#sunburst_div").append("svg")
    .attr("width", width)
    .attr("height", height)
   //  .attr("align","center")
-   .style("background-color","white");
+   .style("background-color","black");
 
 
 var sunburst_svg = svvvg
@@ -103,9 +103,10 @@ console.log("data",db1);
        .attr("y", 15)
        .attr("text-anchor", "middle")
        .style("font-size", "16px")
-       .style("fill","rgb(0,0,0)")
+       //.style("fill","rgb(0,0,0)")
        //.style("text-decoration", "underline")
-       .text("Total accidents");
+       .text("Total accidents")
+       .style("fill","white");
 
     console.log("root",root);
 

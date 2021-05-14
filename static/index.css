@@ -32,8 +32,7 @@ path:hover {
   /* Legend Font Style */
   body {
     font: 11px sans-serif;
-    /* background-color: #101010; */
-    /* color: #ffffff; */
+    /* background-color: #101010; */    
   }
 
   /* Legend Position Style */
@@ -96,5 +95,10 @@ path:hover {
     font-family:"Verdana"
   }
 
-
-
+.b-tick line{
+  stroke: white;
+  
+}
+/* .b-tick axis{
+  color: white;
+} */

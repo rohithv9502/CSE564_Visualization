@@ -61,7 +61,7 @@ d3.json("/biplotdata", function(data) {
       .attr("height", svgHeight)
       .attr("width", svgWidth)
       .attr("transform", "translate(200,0)")
-      .style("background-color","white");
+      .style("background-color","black");
 
   
     var x_axis_domain=[0,0];
@@ -165,22 +165,33 @@ d3.json("/biplotdata", function(data) {
       var xAxis = barGraph
       .append("g")
       .attr("transform", "translate(80,"+285+")")
+      .attr("class","b-tick")
+      // .style("fill","white")
       .call(x_axis_bottom)
+      .selectAll("text")
+      .style("fill","white")
       .append("text")
+      
       // .attr("y", biplot_height )
       //   .attr("x", biplot_width - 50)
       .attr("text-anchor", "end")
       .attr("stroke", "black");
+      
+
   
       var xAxis = barGraph
       .append("g")
       .attr("transform", "translate(80,30)")
+      .attr("class","b-tick")
       .call(x_axis_bottom)
+      .selectAll("text")
+      .style("fill","white")
       .append("text")
       .attr("y", biplot_height - 30)
         .attr("x", biplot_width - 50)
       .attr("text-anchor", "end")
-      .attr("stroke", "black");
+      .attr("stroke", "black")
+      ;
   
     
      /* 
@@ -204,22 +215,30 @@ d3.json("/biplotdata", function(data) {
     
     var rotate_names = barGraph
       .selectAll("text")
-      .attr("transform", "rotate(-15)");
+      .attr("transform", "rotate(-15)")
+      ;
   
     var yAxis = barGraph
       .append("g")
       .attr("transform", "translate(80,30)")
-      .call(y_axis_left);
+      .attr("class","b-tick")
+      .call(y_axis_left)
+      .selectAll("text")
+      .style("fill","white");
     
       var yAxis = barGraph
       .append("g")
       .attr("transform", "translate("+(biplot_width+80)+",30)")
-      .call(y_axis_left);
+      .attr("class","b-tick")
+      .call(y_axis_left)
+      .selectAll("text")
+      .style("fill","white");
 
       labels
       .style("stroke", function (d, i) { return color(i); })
         .attr("x", function (d) { return x_scale(d.x)+10 ; })
           .attr('text-anchor', 'middle')
+          .style("fill","white")
           .attr("class","biplot-labels")
         .attr("y", function (d) { return y_scale(d.y)+100; })
         .text(function (d) { return d.label;});
@@ -239,7 +258,8 @@ d3.json("/biplotdata", function(data) {
       .attr("dy", "1em")
       .attr("font-weight","bold")
         .style("text-anchor", "end")
-      .text("PCA2");
+      .text("PCA2")
+      .style("fill","white");
   
       barGraph.append("text")
       .attr("y", 285+20)
@@ -247,7 +267,8 @@ d3.json("/biplotdata", function(data) {
         .attr("dy", "1em")
         .attr("font-weight","bold")
         .style("text-anchor", "end")
-      .text("PCA1");
+      .text("PCA1")
+      .style("fill","white");
   
           function onMouseOver(d,i)
           {

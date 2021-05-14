@@ -77,9 +77,11 @@ function plotCatXScale(){
     xCatScale.domain(xDomain);
     var xg=g.append("g")
     .attr("class","xtick")
+    .style("stroke","white")
     .attr("transform","translate(100,"+ (bar_height-100) +")");
     xg.call(d3.axisBottom(xCatScale))
     .selectAll("text")
+    .style("fill","white")
     .attr("y", -5)
     .attr("x", 58)
     .attr("transform","rotate(90)")
@@ -95,8 +97,8 @@ function setXAxisLabel(){
     .attr("y", bar_height+50)
     .attr("text-anchor", "start")
     .text("States")
-    .attr("class","xlabel");
-
+    .attr("class","xlabel")
+    .style("fill","white")
 }
 
 function plotLinearYScale(){
@@ -107,10 +109,13 @@ function plotLinearYScale(){
 
    var yg=g.append("g")
    .attr("class","ytick")
+   
    .attr("transform","translate(100,0)")
    .transition()
    .duration(1000);
-   yg.call(d3.axisLeft(yLinearScale).ticks(10));
+   yg.call(d3.axisLeft(yLinearScale).ticks(10))
+   .selectAll("text")
+   .style("fill","white");
    setYAxisLabel("Accidents");
 }
 
@@ -125,7 +130,8 @@ function setYAxisLabel(text){
     .attr("dy", "-5.1em")     
          .attr("text-anchor", "end")
          .text(text)
-         .attr("class","ylabel");
+         .attr("class","ylabel")
+         .style("fill","white");
 }
 
 function barMouseOver(d,i) {
@@ -145,6 +151,7 @@ function barMouseOut(d,i){
 function mouseover(x,y,t){
     
     g.append("text").text(t)
+    .style("fill","white")
     .attr("id","t"+Math.ceil(x)+"-"+Math.ceil(y))
     .attr("x",x-5)
     .attr("y",y);
